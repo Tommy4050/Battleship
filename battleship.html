@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    
+    <title>Torpedó Játék</title>
+</head>
+<body>
+    <h1>Battleship Game</h1>
+    <p>Players place their ships first, then take turns attacking!</p>
+    <p id="rotationStatus">Press "R" to rotate ships</p>
+    <p id="turn">Player 1: Place Your Ships</p>
+    <label for="shipType">Select Ship Type:</label>
+    <select id="shipType" multiple>
+        <option value="5" selected>Carrier (5 cells)</option>
+        <option value="4">Battleship (4 cells)</option>
+        <option value="3">Submarine (3 cells)</option>
+        <option value="2">Destroyer (2 cells)</option>
+    </select>
+    <div class="container">
+        <div class="player-board">
+            <h2>Player 1's Board</h2>
+            <div class="grid-wrapper">
+                <div class="grid" id="grid1"></div>
+            </div>
+        </div>
+        <div class="player-board">
+            <h2>Player 2's Board</h2>
+            <div class="grid-wrapper">
+                <div class="grid" id="grid2"></div>
+            </div>
+        </div>
+    </div>
+    <p id="message"></p>
+    <button id="resetGame">Reset Game</button>
+    <!-- battleship.js/logshot -->
+    <h3>Shot Log</h3>
+    <ul id="shot-log"></ul>
+    <script src="./scripts/battleship.js"></script>
+</body>
+</html>

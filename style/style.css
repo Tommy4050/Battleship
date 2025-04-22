@@ -1,0 +1,82 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+/* Általános */
+.content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+.content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+/*---------*/
+
+/* Torpedó */
+.container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 50px);
+    gap: 1px;
+    width: 385px;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    background-color: lightblue;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.ship {
+    background-color: green;
+}
+
+.hit {
+    background-color: red;
+}
+
+.miss {
+    background-color: gray;
+}
+
+#shot-log {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px; width: 300px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.ship-image {
+    position: absolute;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    z-index: 5;
+}
+.grid-wrapper {
+    position: relative;
+}
+/*---------*/
