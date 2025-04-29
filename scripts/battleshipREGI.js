@@ -48,10 +48,22 @@ function createGrid(gridId, player) {
     }
 }
 
+document.querySelectorAll('.dragable-ship').forEach(ship => {
+    ship.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', ship.dataset.size);
+        e.dataTransfer.setData('text/id', ship.id);
+    });
+});
+
+cell.addEventListener('dragover', (e) => e.preventDefault());
+
 // Játék logika
 function handleCellClick(event) {
     const cell = event.target;
     const grid = cell.parentElement;
+
+    const size = parseInt(e.dataTransfer.getData('text/plain'));
+
     const i = parseInt(cell.dataset.index);
     const player = parseInt(cell.dataset.player);
 

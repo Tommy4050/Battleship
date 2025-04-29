@@ -1,3 +1,8 @@
+:root {
+    --main-cursor: url(../images/cursors/cursor.svg);
+    --corsshair-cursor: url(../images/cursors/crosshair.svg);
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -7,6 +12,7 @@
 body {
     text-align: center;
     font-family: Arial, sans-serif;
+    cursor: var(--main-cursor) 12 12, auto;
 }
 
 /* Általános */
@@ -23,6 +29,17 @@ body {
 /*---------*/
 
 /* Torpedó */
+.draggable-ship {
+    width: 100px;
+    height: 40px;
+    background-color: steelblue;
+    margin: 5px;
+    color: white;
+    text-align: center;
+    cursor: grab;
+}
+
+
 .container {
     display: flex;
     justify-content: space-around;
@@ -44,7 +61,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    cursor: var(--corsshair-cursor) 12 12, auto;
 }
 
 .ship {
@@ -69,13 +86,28 @@ body {
 }
 
 .ship-image {
-    position: absolute;
-    pointer-events: none;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    z-index: 5;
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    transition: transform 0.3s ease; /* nice smooth rotation! */
+    pointer-events: none; /* <--- important!! */
 }
+
+/*-----A hajót tratalmazó cellák és a képek elrejtése és felefedése ( még nincs kész :( ) ----*/
+.ship-hidden {
+    background-color: lightblue;
+}
+
+.ship-image-hidden {
+    opacity: 0;
+}
+
+.ship-image-visble {
+    opacity: 1;
+}
+/*---------*/
+
 .grid-wrapper {
     position: relative;
 }
