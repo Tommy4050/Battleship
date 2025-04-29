@@ -336,6 +336,10 @@ function removeAllEventListeners() {
 
 function populateShipyard(playerId) {
     const shipyard = document.getElementById(`player${playerId}-shipyard`);
+    const innerShipyard = document.createElement('div');
+    
+    innerShipyard.className = 'shipyard-ships';
+
     const ships = [
         { size: 5, name: 'carrier' },
         { size: 4, name: 'battleship' },
@@ -359,7 +363,9 @@ function populateShipyard(playerId) {
         img.style.height = `55px`;
 
         shipDiv.appendChild(img);
-        shipyard.appendChild(shipDiv);
+        //shipyard.appendChild(shipDiv);
+        shipyard.appendChild(innerShipyard);
+        innerShipyard.appendChild(shipDiv);
     });
 }
 
@@ -451,6 +457,8 @@ function indexToCordinates(index) {
     */
 }
 
+populateShipyard(1);
+populateShipyard(2);
 createGrid("grid1", 1);
 createGrid("grid2", 2);
 setupDraggableShips();

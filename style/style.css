@@ -15,6 +15,10 @@ body {
     cursor: var(--main-cursor) 12 12, auto;
 }
 
+select, label {
+    display: none;
+}
+
 /* Általános */
 .content {
     opacity: 0;
@@ -112,3 +116,16 @@ body {
     position: relative;
 }
 /*---------*/
+
+.shipyard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.shipyard-ships {
+    display: flex;
+    flex-wrap: wrap;
+}
