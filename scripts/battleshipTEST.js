@@ -1,12 +1,11 @@
-
 document.addEventListener('DOMContentLoaded', () => {
 
 // Hajó típusok
 const shipLimits = {
     5: 1, // Carrier
     4: 1, // Battleship
-    3: 2, // Submarine
-    2: 2  // Destroyer
+    3: 5, // Submarine & cruser
+    2: 3,  // Destroyer
 };
 
 let shipCounts = {
@@ -86,7 +85,7 @@ function createGrid(gridId, player) {
             }
         
             if (isValidPlacement(player, index, draggedShipSize)) {
-                placeShip(player, index, draggedShipSize);
+                //placeShip(player, index, draggedShipSize);
                 removeDragPreview();
                 isDragging = false;
                 draggedShipSize = null;
@@ -115,18 +114,20 @@ function createGrid(gridId, player) {
                         playerBoards[player].add(index + offset);
                     }
 
-                    addShipImage(`grid${player}`, index, size, vertical ? 'vertical' : 'horizontal', `./images/ships/${shipName}.png`);
+                    addShipImage(`grid${player}`, index, size, vertical ? 'vertical' : 'horizontal', `./images/ships/${shipName}.svg`, shipName);
 
                     shipCounts[player][size]++;
                     placedShips[player].push(size);
                     updateShipDropdown();
                     removePlacedShipFromSelection(size);
 
-                    if (placedShips[1].length >= 6 && placedShips[2].length >= 6) {
+                    if (placedShips[1].length >= 10 && placedShips[2].length >= 10) {
                         placingShips = false;
                         document.getElementById("turn").textContent = `Player ${currentPlayer = currentPlayer === 1 ? 2 : 1}'s Turn`;
+                        document.getElementById('reset-player1-board').disabled = true;
+                        document.getElementById('reset-player2-board').disabled = true;
                     } else {
-                        if (placedShips[currentPlayer].length >= 6) {
+                        if (placedShips[currentPlayer].length >= 10) {
                             currentPlayer = currentPlayer === 1 ? 2 : 1;
                             updateShipDropdown();
                         }
@@ -150,11 +151,10 @@ function setupDraggableShips() {
 
         ship.addEventListener("dragstart", (e) => {
             isDragging = true;
-            draggedShipSize = parseInt(e.target.dataset.size);
+            draggedShipSize = ship.dataset.size;
             e.dataTransfer.setData('shipSize', ship.dataset.size);
             e.dataTransfer.setData('shipName', ship.dataset.name);
             
-            // ➡️ New: detect which shipyard
             if (e.target.closest("#player1-shipyard")) {
                 draggingPlayer = 1;
             } else if (e.target.closest("#player2-shipyard")) {
@@ -173,29 +173,36 @@ function setupDraggableShips() {
 
 function removePlacedShipFromSelection(size) {
     const ship = document.querySelector(`.draggable-ship[data-size='${size}']`);
+    console.log(size);
     if (ship) ship.remove();
 }
 
 function showDragPreview(cell, size) {
     removeDragPreview();
     if (!placingShips || !draggedShipSize || !cell) return;
+
     const grid = cell.parentElement;
     const index = parseInt(cell.dataset.index);
     const player = parseInt(cell.dataset.player);
+    
+    const cellSize = cell.offsetWidth;
+    const top = cell.offsetTop;
+    const left = cell.offsetLeft;
 
     dragPreview = document.createElement('div');
     dragPreview.classList.add('drag-preview');
-    const cellSize = 55;
     dragPreview.style.width = vertical ? `${cellSize}px` : `${cellSize * size}px`;
     dragPreview.style.height = vertical ? `${cellSize * size}px` : `${cellSize}px`;
     dragPreview.style.position = 'absolute';
     dragPreview.style.pointerEvents = 'none';
     dragPreview.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
+
     if (!isValidPlacement(player, index, size)) {
         dragPreview.style.backgroundColor = 'rgba(255, 0, 0, 0.4)';
-    }    
-    dragPreview.style.top = `${Math.floor(index / gridSize) * cellSize}px`;
-    dragPreview.style.left = `${(index % gridSize) * cellSize}px`;
+    }
+
+    dragPreview.style.top = `${top}px`;
+    dragPreview.style.left = `${left}px`;
 
     grid.parentElement.appendChild(dragPreview);
 }
@@ -234,11 +241,11 @@ function handleCellClick(event) {
             placedShips[player].push(shipSize);
             updateShipDropdown();
 
-            if (placedShips[1].length >= 6 && placedShips[2].length >= 6) {
+            if (placedShips[1].length >= 10 && placedShips[2].length >= 10) {
                 placingShips = false;
                 document.getElementById("turn").textContent = `Player ${currentPlayer = currentPlayer === 1 ? 2 : 1}'s Turn`;
             } else {
-                if(placedShips[currentPlayer].length >= 6) {
+                if(placedShips[currentPlayer].length >= 10) {
                     currentPlayer = currentPlayer === 1 ? 2 : 1;
                     updateShipDropdown();
                 } else return;
@@ -343,10 +350,14 @@ function populateShipyard(playerId) {
     const ships = [
         { size: 5, name: 'carrier' },
         { size: 4, name: 'battleship' },
+        { size: 3, name: 'cruser' },
+        { size: 3, name: 'cruser' },
+        { size: 3, name: 'submarine' },
         { size: 3, name: 'submarine' },
         { size: 3, name: 'submarine' },
         { size: 2, name: 'destroyer' },
-        { size: 2, name: 'destroyer' }
+        { size: 2, name: 'destroyer' },
+        { size: 2, name: 'destroyer' },
     ];
 
     ships.forEach(ship => {
@@ -357,10 +368,12 @@ function populateShipyard(playerId) {
         shipDiv.dataset.name = ship.name;
 
         const img = document.createElement('img');
-        img.src = `./images/ships/${ship.name}.png`; // <-- Majd ha kész a hajó változtasd meg a LINKET és a FORMÁTUMOT!
+        img.src = `./images/ships/${ship.name}.svg`;
         img.alt = ship.name;
-        img.style.width = `${ship.size * 55}px`;
-        img.style.height = `55px`;
+        img.style.width = `200px`;
+        img.style.height = `150px`;
+        img.style.transform = `rotate(90deg)`;
+        img.style.transform += `translate(-50px, 50px)`
 
         shipDiv.appendChild(img);
         //shipyard.appendChild(shipDiv);
@@ -407,8 +420,40 @@ function resetGame() {
 }
 document.getElementById("resetGame").addEventListener("click", resetGame);
 
+// Játékos tábla reset
+function resetPlayerBoard(playerNumber) {
+    const grid = document.getElementById(`grid${playerNumber}`);
+    const shipyard = document.getElementById(`player${playerNumber}-shipyard`);
+
+    // Tábla letisztítása
+    for (let i = 0; i < grid.children.length; i++) {
+        const cell = grid.children[i];
+        cell.classList.remove("ship", "hit", "miss");
+        cell.innerHTML = '';
+    }
+
+    // Változók resetelése
+    playerBoards[playerNumber] = new Set();
+    shipCounts[playerNumber] = { 5: 0, 4: 0, 3: 0, 2: 0 };
+    placedShips[playerNumber] = [];
+
+    // A shipyard ujratöltése
+    shipyard.innerHTML = `<h3>Player ${playerNumber} Ships</h3>`;
+    populateShipyard(playerNumber);
+    setupDraggableShips();
+
+    if (currentPlayer === playerNumber) {
+        updateShipDropdown();
+        document.getElementById("turn").textContent = `Player ${playerNumber}: Place Your Ships`;
+        document.getElementById("message").textContent = "";
+    }
+}
+document.getElementById("reset-player1-board").addEventListener("click", () => resetPlayerBoard(1));
+document.getElementById("reset-player2-board").addEventListener("click", () => resetPlayerBoard(2));
+
+
 // Hajóképke ráillesztése
-function addShipImage(gridId, index, size, orientation, src) {
+function addShipImage(gridId, index, size, orientation, src, name) {
     const grid = document.getElementById(gridId);
     const cell = grid.children[index];
 
@@ -421,23 +466,54 @@ function addShipImage(gridId, index, size, orientation, src) {
     shipImage.style.top = '0';
     shipImage.style.left = '0';
 
-    const cellSize = cell.offsetWidth;
-
     if (orientation === 'horizontal') {
-        shipImage.style.width = `${cellSize * size}px`;
-        shipImage.style.height = `${cellSize}px`;
+        shipImage.style.width = `${400}px`;
+        shipImage.style.height = `${300}px`;
+        shipImage.style.transform = 'rotate(90deg)'; // Azért itt forgatjuk el mert a kép álló alapból.
+        shipImage.style.transformOrigin = 'top left';
+        shipImage.style.transform +=  addShipImageHelper(size, orientation, name); // size: A hajó mérete, orientation: Az irány,
+    } else {
+        shipImage.style.width = `${400}px`;
+        shipImage.style.height = `${300}px`;
         shipImage.style.transform = 'rotate(0deg)';
         shipImage.style.transformOrigin = 'top left';
-    } else {
-        shipImage.style.width = `${cellSize * size}px`;
-        shipImage.style.height = `${cellSize}px`;
-        shipImage.style.transform = 'rotate(90deg)';
-        shipImage.style.transformOrigin = 'top left';
-        shipImage.style.transform += ` translate(0, -50px)`;
+        shipImage.style.transform += addShipImageHelper(size, orientation, name);
     }
 
     cell.style.position = 'relative'; 
     cell.appendChild(shipImage);
+}
+
+// Az AddShipImage segéd függvénye segít a mértezésben orientáció szerint
+function addShipImageHelper(size, orientation, name) {
+    if(orientation === 'horizontal') {
+        switch(size && name) {
+            case 2 && 'destroyer':
+                return `translate(-170px, -200px)`;
+            case 3 && 'submarine':
+                return `translate(-165px, -170px)`;    
+            case 3 && 'cruser':
+                return `translate(-172px, -210px)`;
+            case 4 && 'battleship':
+                return `translate(-175px, -245px)`;
+            case 5 &&'carrier':
+                return `translate(-180px, -270px)`;
+        }
+    } else {
+        switch(size && name) {
+            case 2 && 'destroyer':
+                return `translate(-170px, -100px)`;
+            case 3 && 'submarine':
+                return `translate(-165px, -25px)`;
+            case 3 && 'cruser':
+                return `translate(-172px, -60px)`;
+            case 4 && 'battleship':
+                return `translate(-175px, -45px)`;
+            case 5 && 'carrier':
+                return `translate(-182px, -20px)`;
+        }
+    }
+    
 }
 
 // Találatok logolása

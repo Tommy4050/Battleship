@@ -1,6 +1,6 @@
 :root {
-    --main-cursor: url(../images/cursors/cursor.svg);
-    --corsshair-cursor: url(../images/cursors/crosshair.svg);
+    --cursor-main: url(../images/cursors/cursor.svg);
+    --cursor-pointer: url(../images/cursors/pointer.svg);
 }
 
 * {
@@ -12,7 +12,7 @@
 body {
     text-align: center;
     font-family: Arial, sans-serif;
-    cursor: var(--main-cursor) 12 12, auto;
+    cursor: var(--cursor-main) 12 12, auto;
 }
 
 select, label {
@@ -65,7 +65,7 @@ select, label {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: var(--corsshair-cursor) 12 12, auto;
+    cursor: var(--cursor-pointer) 12 12, auto;
 }
 
 .ship {
@@ -90,7 +90,7 @@ select, label {
 }
 
 .ship-image {
-    object-fit: fill;
+    object-fit: contain;
     width: 100%;
     height: 100%;
     border-radius: 4px;

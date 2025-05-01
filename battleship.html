@@ -14,7 +14,7 @@
     <p id="turn">Player 1: Place Your Ships</p>
     <label for="shipType">Select Ship Type:</label>
     <select id="shipType" multiple>
-        <option value="5" selected>Carrier (5 cells)</option>
+        <option value="5">Carrier (5 cells)</option>
         <option value="4">Battleship (4 cells)</option>
         <option value="3">Submarine (3 cells)</option>
         <option value="2">Destroyer (2 cells)</option>
@@ -35,12 +35,14 @@
             <div class="grid-wrapper">
                 <div class="grid" id="grid1"></div>
             </div>
+            <button id="reset-player1-board">Reset Player 1</button>
         </div>
         <div class="player-board">
             <h2>Player 2's Board</h2>
             <div class="grid-wrapper">
                 <div class="grid" id="grid2"></div>
             </div>
+            <button id="reset-player2-board">Reset Player 2</button>
         </div>
     </div>
     <p id="message"></p>
@@ -49,5 +51,6 @@
     <h3>Shot Log</h3>
     <ul id="shot-log"></ul>
     <script src="./scripts/battleshipTEST.js"></script>
+    <img src="./images/ships/carrier.svg" alt="" style="width: 100%; height: 100%;">
 </body>
 </html>
