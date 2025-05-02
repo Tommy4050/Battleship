@@ -148,7 +148,7 @@ let draggingPlayer = null;
 
 function setupDraggableShips() {
     document.querySelectorAll('.draggable-ship').forEach(ship => {
-
+        
         ship.addEventListener("dragstart", (e) => {
             isDragging = true;
             draggedShipSize = ship.dataset.size;
@@ -169,7 +169,6 @@ function setupDraggableShips() {
         });
     });
 }
-
 
 function removePlacedShipFromSelection(size) {
     const ship = document.querySelector(`.draggable-ship[data-size='${size}']`);
@@ -196,6 +195,23 @@ function showDragPreview(cell, size) {
     dragPreview.style.position = 'absolute';
     dragPreview.style.pointerEvents = 'none';
     dragPreview.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
+
+    /*dragPreview = document.createElement('img');
+    dragPreview.src = `../images/ships/${draggedShipName}.svg`;
+    dragPreview.classList.add('ship-image');
+    dragPreview.style.position = 'absolute';
+    dragPreview.style.pointerEvents = 'none';
+    dragPreview.style.zIndex = '1000';
+    dragPreview.style.width = '200px';
+    dragPreview.style.height = '150px';
+    dragPreview.style.opacity = '0.7';
+
+    if (vertical) {
+    dragPreview.style.transform = 'rotate(0deg)';
+    } else {
+    dragPreview.style.transform = 'rotate(90deg)';
+    }
+    */
 
     if (!isValidPlacement(player, index, size)) {
         dragPreview.style.backgroundColor = 'rgba(255, 0, 0, 0.4)';

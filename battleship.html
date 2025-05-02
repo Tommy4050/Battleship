@@ -23,11 +23,21 @@
         <h3>Player 1 Ships</h3>
         <!-- Ships for player 1 -->
       </div>
+      <div id="player1-shipyard-controls">
+        <button onclick="cycleShip(1, -1)">◀️</button>
+        <button onclick="cycleShip(1, 1)">▶️</button>
+      </div>
+      
       
       <div id="player2-shipyard" class="shipyard">
         <h3>Player 2 Ships</h3>
         <!-- Ships for player 2 -->
       </div>
+      <div id="player2-shipyard-controls">
+        <!--<button onclick="cycleShip(2, -1)">◀️</button>
+        <button onclick="cycleShip(2, 1)">▶️</button>-->
+      </div>
+      
       
     <div class="container">
         <div class="player-board">
@@ -36,6 +46,7 @@
                 <div class="grid" id="grid1"></div>
             </div>
             <button id="reset-player1-board">Reset Player 1</button>
+            <button id="deployButton" disabled>Deploy Fleet</button>
         </div>
         <div class="player-board">
             <h2>Player 2's Board</h2>
@@ -43,6 +54,7 @@
                 <div class="grid" id="grid2"></div>
             </div>
             <button id="reset-player2-board">Reset Player 2</button>
+            <button id="deployButton" disabled>Deploy Fleet</button>
         </div>
     </div>
     <p id="message"></p>
@@ -50,7 +62,6 @@
     <!-- battleship.js/logshot -->
     <h3>Shot Log</h3>
     <ul id="shot-log"></ul>
-    <script src="./scripts/battleshipTEST.js"></script>
-    <img src="./images/ships/carrier.svg" alt="" style="width: 100%; height: 100%;">
+    <script src="./scripts/battleshipTEST2.js"></script>
 </body>
 </html>

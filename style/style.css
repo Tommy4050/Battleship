@@ -1,6 +1,12 @@
 :root {
     --cursor-main: url(../images/cursors/cursor.svg);
     --cursor-pointer: url(../images/cursors/pointer.svg);
+    
+    --water: url(../images/tiles/water_tile.svg);
+    --ship: url(../images/tiles/ship_tile.svg);
+    --hit: url(../images/tiles/shipHit_tile.svg);
+    --sunk: url(../images/tiles/destroyed.svg);
+    --miss: url(../images/tiles/shipMiss_tile.svg);
 }
 
 * {
@@ -60,8 +66,8 @@ select, label {
 .cell {
     width: 50px;
     height: 50px;
-    background-color: lightblue;
-    border: 1px solid #000;
+    background-image: var(--water);
+    border: 0.5px solid #000;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,15 +75,22 @@ select, label {
 }
 
 .ship {
-    background-color: green;
+    background-image: var(--ship);
 }
 
 .hit {
-    background-color: red;
+    background-image: var(--hit);
+}
+
+.cell.sunk {
+    background-image: var(--sunk);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .miss {
-    background-color: gray;
+    background-image: var(--miss);
 }
 
 #shot-log {
@@ -128,4 +141,11 @@ select, label {
 .shipyard-ships {
     display: flex;
     flex-wrap: wrap;
+}
+
+
+
+.target-cell {
+    outline: 3px solid yellow;
+    box-sizing: border-box;
 }
