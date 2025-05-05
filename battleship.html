@@ -10,6 +10,7 @@
 <body>
     <h1>Battleship Game</h1>
     <p>Players place their ships first, then take turns attacking!</p>
+
     <p id="rotationStatus">Press "R" to rotate ships</p>
     <p id="turn">Player 1: Place Your Ships</p>
     <label for="shipType">Select Ship Type:</label>
@@ -23,22 +24,10 @@
         <h3>Player 1 Ships</h3>
         <!-- Ships for player 1 -->
       </div>
-      <div id="player1-shipyard-controls">
-        <button onclick="cycleShip(1, -1)">◀️</button>
-        <button onclick="cycleShip(1, 1)">▶️</button>
-      </div>
-      
-      
       <div id="player2-shipyard" class="shipyard">
         <h3>Player 2 Ships</h3>
         <!-- Ships for player 2 -->
       </div>
-      <div id="player2-shipyard-controls">
-        <!--<button onclick="cycleShip(2, -1)">◀️</button>
-        <button onclick="cycleShip(2, 1)">▶️</button>-->
-      </div>
-      
-      
     <div class="container">
         <div class="player-board">
             <h2>Player 1's Board</h2>
