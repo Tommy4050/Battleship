@@ -82,6 +82,28 @@ select, label {
     background-image: var(--hit);
 }
 
+.cell.hidden-ship.ship {
+    background-image: var(--water);
+}
+
+.ship-image.hidden-ship {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cell.hit {
+    background-image: var(--hit) !important;
+    background-size: cover;
+}
+
+.cell.sunk {
+    background-image: var(--sunk) !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
 .cell.sunk {
     background-image: var(--sunk);
     background-size: cover;
@@ -149,3 +171,84 @@ select, label {
     outline: 3px solid yellow;
     box-sizing: border-box;
 }
+
+
+
+#victoryOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+  
+#victoryOverlay.hidden {
+    display: none;
+}
+  
+#victoryMessage {
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+#startOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 128, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 998;
+}
+  
+#startOverlay.hidden {
+    display: none;
+}
+  
+#startMessage {
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: navy;
+    text-align: center;
+}
+
+#turnOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 997;
+}
+  
+#turnOverlay.hidden {
+    display: none;
+}
+  
+#turnMessage {
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}  

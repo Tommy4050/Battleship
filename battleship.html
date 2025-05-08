@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./images/icons/anchor.ico" type="image/x-icon">
     <link rel="stylesheet" href="./style/style.css">
     
     <title>Torpedó Játék</title>
@@ -35,7 +36,8 @@
                 <div class="grid" id="grid1"></div>
             </div>
             <button id="reset-player1-board">Reset Player 1</button>
-            <button id="deployButton" disabled>Deploy Fleet</button>
+            <button id="randomize-player1">Randomize Player 1</button>
+            <button id="deploy-player1" disabled>Deploy Fleet</button>
         </div>
         <div class="player-board">
             <h2>Player 2's Board</h2>
@@ -43,14 +45,29 @@
                 <div class="grid" id="grid2"></div>
             </div>
             <button id="reset-player2-board">Reset Player 2</button>
-            <button id="deployButton" disabled>Deploy Fleet</button>
+            <button id="randomize-player2">Randomize Player 2</button>
+            <button id="deploy-player2" disabled>Deploy Fleet</button>
         </div>
     </div>
     <p id="message"></p>
-    <button id="resetGame">Reset Game</button>
+    
     <!-- battleship.js/logshot -->
     <h3>Shot Log</h3>
     <ul id="shot-log"></ul>
+
+    <div id="victoryOverlay" class="hidden">
+        <div id="victoryMessage"></div>
+        <button id="resetGame" onclick="{document.getElementById('victoryOverlay').classList.add('hidden')}">Reset Game</button>
+        <button><a href="./index.html">Back to the Main Menu</a></button>
+    </div>
+    <div id="startOverlay" class="hidden">
+        <div id="startMessage">🚢 Let the battle begin! 🚢</div>
+    </div>
+    <div id="turnOverlay" class="hidden">
+        <div id="turnMessage"></div>
+    </div>
+      
+      
     <script src="./scripts/battleshipTEST2.js"></script>
 </body>
 </html>

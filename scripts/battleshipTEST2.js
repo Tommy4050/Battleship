@@ -153,7 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
                             if (placedShips[1].length >= 10 && placedShips[2].length >= 10) {
                                 placingShips = false;
-                                document.getElementById("turn").textContent = `Player ${currentPlayer = currentPlayer === 1 ? 2 : 1}'s Turn`;
+                                showStartOverlay(() => {
+                                    showTurnOverlay(currentPlayer, () => {
+                                        document.getElementById("turn").textContent = `Player ${currentPlayer}'s Turn`;
+                                    });
+                                });                                
                                 document.getElementById('reset-player1-board').disabled = true;
                                 document.getElementById('reset-player2-board').disabled = true;
                             } else {
@@ -289,7 +293,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
                 if (placedShips[1].length >= 10 && placedShips[2].length >= 10) {
                     placingShips = false;
-                    document.getElementById("turn").textContent = `Player ${currentPlayer = currentPlayer === 1 ? 2 : 1}'s Turn`;
+                    showStartOverlay(() => {
+                        showTurnOverlay(currentPlayer, () => {
+                            document.getElementById("turn").textContent = `Player ${currentPlayer}'s Turn`;
+                        });
+                    });                    
                 } else {
                     if (placedShips[currentPlayer].length >= 10) {
                         updateShipDropdown();
@@ -307,6 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
             if (playerBoards[opponent].has(i)) {
                 opponentCell.classList.add("hit");
+
                 playerScores[currentPlayer]++;
                 killstreak = true;
                 logShot(currentPlayer, i, "hit");
@@ -323,6 +332,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                 const c = opponentGrid.querySelector(`.cell[data-index="${pos}"]`);
                                 c.classList.remove('hit');
                                 c.classList.add('sunk');
+                                cell.classList.remove('hidden-ship');
+                                const img = cell.querySelector('.ship-image');
+                                if (img) img.classList.remove('hidden-ship');
+
                             });
     
                             const shipImage = opponentGrid.querySelector(
@@ -341,7 +354,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
                 const totalShipCells = placedShips[opponent].reduce((sum, ship) => sum + ship.size, 0);
                 if (playerScores[currentPlayer] === totalShipCells) {
-                    document.getElementById("message").textContent = `Player ${currentPlayer} wins!`;
+                    showVictoryOverlay(currentPlayer);
+                    cell.classList.remove('hidden-ship');
                     removeAllEventListeners();
                     return;
                 }
@@ -353,9 +367,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
             if (!killstreak) {
                 currentPlayer = opponent;
+                showTurnOverlay(currentPlayer, () => {
+                    document.getElementById("turn").textContent = `Player ${currentPlayer}'s Turn`;
+                });
             }
     
-            document.getElementById("turn").textContent = `Player ${currentPlayer}'s Turn`;
         }
     }
         
@@ -458,7 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Még mindig nincs kész :(
+    // Még mindig mindig, de majdnem kész :(
     function resetGame() {
         removeAllEventListeners();
         document.getElementById('grid1').innerHTML = '';
@@ -484,8 +500,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("turn").textContent = "Player 1: Place Your Ships";
         document.getElementById("message").textContent = "";
 
-        document.getElementById("deployButton").disabled = true;
-        document.getElementById("deployButton").style.display = "inline-block";
+        document.getElementById("deploy-player1").disabled = true;
+        document.getElementById("deploy-player2").disabled = true;
+
+        document.getElementById("randomize-player1").disabled = false;
+        document.getElementById("randomize-player2").disabled = true;
+
+        document.getElementById("reset-player1-board").disabled = false;
+        document.getElementById("reset-player2-board").disabled = true;
+
+
 
         createGrid("grid1", 1);
         createGrid("grid2", 2);
@@ -532,6 +556,75 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.getElementById("reset-player1-board").addEventListener("click", () => resetPlayerBoard(1));
     document.getElementById("reset-player2-board").addEventListener("click", () => resetPlayerBoard(2));
+
+    // Játékos tábla randomizálása
+    function randomizeShips(player) {
+        resetPlayerBoard(player);
+    
+        const sizesAndNames = [
+            { size: 5, name: 'carrier' },
+            { size: 4, name: 'battleship' },
+            { size: 3, name: 'cruser' },
+            { size: 3, name: 'cruser' },
+            { size: 3, name: 'submarine' },
+            { size: 3, name: 'submarine' },
+            { size: 3, name: 'submarine' },
+            { size: 2, name: 'destroyer' },
+            { size: 2, name: 'destroyer' },
+            { size: 2, name: 'destroyer' },
+        ];
+    
+        const grid = document.getElementById(`grid${player}`);
+        const occupied = playerBoards[player];
+    
+        for (let ship of sizesAndNames) {
+            let placed = false;
+            let attempts = 0;
+    
+            while (!placed && attempts < 1000) {
+                vertical = Math.random() < 0.5;
+    
+                const startIndex = Math.floor(Math.random() * gridSize * gridSize);
+    
+                if (isValidPlacement(player, startIndex, ship.size)) {
+                    let cellsUsed = [];
+    
+                    for (let j = 0; j < ship.size; j++) {
+                        const offset = vertical ? j * gridSize : j;
+                        const cellIndex = startIndex + offset;
+                        const cell = grid.querySelector(`.cell[data-index="${cellIndex}"]`);
+                        cell.classList.add("ship");
+                        occupied.add(cellIndex);
+                        cellsUsed.push(cellIndex);
+                    }
+    
+                    placedShips[player].push({
+                        size: ship.size,
+                        positions: cellsUsed
+                    });
+    
+                    shipCounts[player][ship.size]++;
+                    addShipImage(`grid${player}`, startIndex, ship.size, vertical ? 'vertical' : 'horizontal', `./images/ships/${ship.name}.svg`, ship.name);
+                    removePlacedShipFromSelection(ship.size);
+    
+                    placed = true;
+                }
+    
+                attempts++;
+            }
+    
+            if (!placed) {
+                console.warn(`⚠️ Failed to place ship: ${ship.name}`);
+            }
+        }
+    
+        checkShipPlacementComplete();
+    }
+    
+    
+    document.getElementById("randomize-player1").addEventListener("click", () => randomizeShips(1));
+    document.getElementById("randomize-player2").addEventListener("click", () => randomizeShips(2));
+
     
     
     // Hajóképke ráillesztése
@@ -611,26 +704,86 @@ document.addEventListener('DOMContentLoaded', () => {
         const totalRequired = Object.entries(shipLimits)
             .reduce((sum, [size, count]) => sum + size * count, 0);
     
-        const deployBtn = document.getElementById("deployButton");
-        deployBtn.disabled = totalPlaced !== totalRequired;
+        const deployBtn = document.getElementById(`deploy-player${currentPlayer}`);
+        if (totalPlaced === totalRequired) {
+            deployBtn.disabled = false;
+        } else {
+            deployBtn.disabled = true;
+        }
     }
     
+    document.getElementById("deploy-player1").addEventListener("click", () => {
+        handleDeploy(1);
+    });
+    document.getElementById("deploy-player2").addEventListener("click", () => {
+        handleDeploy(2);
+    });
 
-    document.getElementById("deployButton").addEventListener("click", () => {
-        document.getElementById("deployButton").style.display = "none";
+    function handleDeploy(player) {
+        document.getElementById(`deploy-player${player}`).disabled = true;
+        document.getElementById(`randomize-player${player}`).disabled = true;
+        document.getElementById(`reset-player${player}-board`).disabled = true;
     
-        if (currentPlayer === 1) {
+        hidePlayerShips(player);
+    
+        if (player === 1) {
             currentPlayer = 2;
             updateShipDropdown();
-            document.getElementById("turn").textContent = `Player ${currentPlayer}: Place Your Ships`;
+    
+            document.getElementById("turn").textContent = `Player 2: Place Your Ships`;
             document.getElementById("message").textContent = "";
+    
+            document.getElementById("deploy-player2").disabled = true;
+            document.getElementById("randomize-player2").disabled = false;
+            document.getElementById("reset-player2-board").disabled = false;
     
             checkShipPlacementComplete();
         } else {
             placingShips = false;
-            document.getElementById("turn").textContent = `Player ${currentPlayer}'s Turn`;
+    
+            document.getElementById("randomize-player1").disabled = true;
+            document.getElementById("randomize-player2").disabled = true;
+            document.getElementById("reset-player1-board").disabled = true;
+            document.getElementById("reset-player2-board").disabled = true;
+            document.getElementById("deploy-player1").disabled = true;
+            document.getElementById("deploy-player2").disabled = true;
+    
+            showStartOverlay(() => {
+                showTurnOverlay(currentPlayer, () => {
+                    document.getElementById("turn").textContent = `Player ${currentPlayer}'s Turn`;
+                });
+            });
         }
-    });
+    }
+
+    // Az ellenfél táblájának elrejtése
+    function hidePlayerShips(player) {
+        const grid = document.getElementById(`grid${player}`);
+        const cells = grid.querySelectorAll('.cell');
+        const images = grid.querySelectorAll('.ship-image');
+    
+        cells.forEach(cell => {
+            if (cell.classList.contains("ship")) {
+                cell.classList.add("hidden-ship");
+            }
+        });
+    
+        images.forEach(img => {
+            const parentCell = img.closest('.cell');
+            if (parentCell && parentCell.dataset.player == player) {
+                img.classList.add("hidden-ship");
+            }
+        });
+    }
+
+    // Győztes játékos megjelenítése
+    function showVictoryOverlay(player) {
+        const overlay = document.getElementById("victoryOverlay");
+        const message = document.getElementById("victoryMessage");
+    
+        message.textContent = `🎉 Player ${player} Wins! 🎉`;
+        overlay.classList.remove("hidden");
+    }
 
     // Találatok logolása
     function logShot(player, cellIndex, result) {
@@ -657,4 +810,29 @@ document.addEventListener('DOMContentLoaded', () => {
     createGrid("grid2", 2);
     setupDraggableShips();
     
-    });
+});
+
+// Játék inditása(overlay)
+function showStartOverlay(callback) {
+    const overlay = document.getElementById("startOverlay");
+    overlay.classList.remove("hidden");
+
+    setTimeout(() => {
+        overlay.classList.add("hidden");
+        if (typeof callback === "function") callback();
+    }, 3000);
+}
+
+// Az aktuális játékos megjelnítése a kör elején(overlay)
+function showTurnOverlay(player, callback) {
+    const overlay = document.getElementById("turnOverlay");
+    const message = document.getElementById("turnMessage");
+
+    message.textContent = `🎯 Player ${player}'s Turn`;
+    overlay.classList.remove("hidden");
+
+    setTimeout(() => {
+        overlay.classList.add("hidden");
+        if (typeof callback === "function") callback();
+    }, 2000);
+}
