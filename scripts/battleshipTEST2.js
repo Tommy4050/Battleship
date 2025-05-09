@@ -467,6 +467,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img.style.height = `150px`;
             img.style.transform = `rotate(90deg)`;
             img.style.transform += `translate(-50px, 50px)`
+            img.style.b
     
             shipDiv.appendChild(img);
             shipyard.appendChild(innerShipyard);
@@ -476,6 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Még mindig mindig, de majdnem kész :(
     function resetGame() {
+        console.log("resetGame() is runnig");
         removeAllEventListeners();
         document.getElementById('grid1').innerHTML = '';
         document.getElementById('grid2').innerHTML = '';
@@ -803,13 +805,11 @@ document.addEventListener('DOMContentLoaded', () => {
         */
     }
 
-    
     populateShipyard(1);
     populateShipyard(2);
     createGrid("grid1", 1);
     createGrid("grid2", 2);
-    setupDraggableShips();
-    
+    setupDraggableShips();    
 });
 
 // Játék inditása(overlay)

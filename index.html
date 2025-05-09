@@ -4,22 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./images/icons/anchor.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Micro+5&family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style/style.css">
     <script src="./scripts/load.js" defer></script>
-    <script src="./scripts/battleship.js" defer></script>
     <title>Torpedó</title>
 </head>
 <body>
-    <nav>
-        <a href="#" data-section="howToPlay"> How To Play</a> <!-- Ez a how to play linkje majd a kész html kódot rakd a load.js-be (sections howToPlay) -->
-        <a href="./battleship.html" class="normal-link">Play</a>
-    </nav>
-    <main class="content" id="content">
-        <!-- Itt cserél csak az itteni tartalmat rakd a js-be -->
-         <!--
-            A How to play résznél van egy hidden-element osztály nem muszáj használnod (A load.js-be hosszárendel egy css osztályt és "láthatóvá" teszi, amikor 20% - a viewportba van).
-            Csak placeholder képeket rakj bele, majd csinálunk a kész játékról screenshot-ot. (images mappa).
-         -->
-    </main>
+    <div id="arcade">
+        <div id="menuContent" class="centered arcade-screen">
+            <h1>Battleship</h1>
+            <nav>
+                <a href="./battleship.html" data-transition="true">Play Game</a>
+                <a href="#" data-section="howToPlay">How To Play</a>
+            </nav>
+          </div>
+          <main class="content" id="content">
+            <!-- Itt cserél csak az itteni tartalmat rakd a js-be -->
+             <!--
+                A How to play résznél van egy hidden-element osztály nem muszáj használnod (A load.js-be hosszárendel egy css osztályt és "láthatóvá" teszi, amikor 20% - a viewportba van).
+                Csak placeholder képeket rakj bele, majd csinálunk a kész játékról screenshot-ot. (images mappa).
+             -->
+        </main>
+          <div id="loadingScreen" class="loading hidden">
+            <div class="loader">Loading...</div>
+          </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const links = document.querySelectorAll('a[data-transition="true"]');
+          const menu = document.getElementById("menuContent");
+          const loading = document.getElementById("loadingScreen");
+      
+          links.forEach(link => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+      
+              const target = link.getAttribute("href");
+      
+              // 1. Zoom & fade out menu
+              menu.classList.add("exit");
+      
+              // 2. Show loader after delay
+              setTimeout(() => {
+                loading.classList.remove("hidden");
+              }, 300); // allow zoom to start first
+      
+              // 3. Navigate to new page
+              setTimeout(() => {
+                window.location.href = target;
+              }, 900); // allow zoom + loader
+            });
+          });
+        });
+      </script>
+      
+      
+
 </body>
 </html>
