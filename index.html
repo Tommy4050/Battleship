@@ -42,19 +42,17 @@
               e.preventDefault();
       
               const target = link.getAttribute("href");
-      
-              // 1. Zoom & fade out menu
+
               menu.classList.add("exit");
       
-              // 2. Show loader after delay
               setTimeout(() => {
                 loading.classList.remove("hidden");
-              }, 300); // allow zoom to start first
+              }, 300);
       
               // 3. Navigate to new page
               setTimeout(() => {
                 window.location.href = target;
-              }, 900); // allow zoom + loader
+              }, 900);
             });
           });
         });
