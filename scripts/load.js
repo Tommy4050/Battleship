@@ -7,75 +7,75 @@ const sections = {
     </nav>
   `,
   howToPlay: `
-  <div class="how-to-play-container">
-    <h2 class="how-to-play-title">How to Play</h2>
+    <div class="how-to-play-container">
+        <h2 class="how-to-play-title">How to Play</h2>
 
-    <div class="how-to-step from-left">
-      <img src="https://via.placeholder.com/300x200" alt="Step 1" class="how-to-image">
-      <div class="how-to-text">
-        <h3>Step 1: Place Your Ships</h3>
-        <p>Drag your ships onto your board. Use "R" to rotate. Position them carefully!</p>
-      </div>
-    </div>
+        <div class="how-to-step from-left">
+        <img src="https://via.placeholder.com/300x200" alt="Step 1" class="how-to-image">
+        <div class="how-to-text">
+            <h3>Step 1: Place Your Ships</h3>
+            <p>Drag your ships onto your board. Use "R" to rotate. Position them carefully!</p>
+        </div>
+        </div>
 
-    <div class="how-to-step from-right">
-      <div class="how-to-text">
-        <h3>Step 2: Take Turns Shooting</h3>
-        <p>Click on your opponent’s grid to fire. A hit marks a red cell. Misses are grey.</p>
-      </div>
-      <img src="https://via.placeholder.com/300x200" alt="Step 2" class="how-to-image">
-    </div>
+        <div class="how-to-step from-right">
+        <div class="how-to-text">
+            <h3>Step 2: Take Turns Shooting</h3>
+            <p>Click on your opponent’s grid to fire. A hit marks a red cell. Misses are grey.</p>
+        </div>
+        <img src="https://via.placeholder.com/300x200" alt="Step 2" class="how-to-image">
+        </div>
 
-    <div class="how-to-step from-left">
-      <img src="https://via.placeholder.com/300x200" alt="Step 3" class="how-to-image">
-      <div class="how-to-text">
-        <h3>Step 3: Sink All Enemy Ships</h3>
-        <p>The first player to destroy all enemy ships wins the battle!</p>
-      </div>
-    </div>
+        <div class="how-to-step from-left">
+        <img src="https://via.placeholder.com/300x200" alt="Step 3" class="how-to-image">
+        <div class="how-to-text">
+            <h3>Step 3: Sink All Enemy Ships</h3>
+            <p>The first player to destroy all enemy ships wins the battle!</p>
+        </div>
+        </div>
 
-    <div class="back-button-wrapper">
-      <a href="#" data-section="home" class="menu-link">← Back to Home</a>
-    </div>
-    <div class="how-to-step from-right">
-      <div class="how-to-text">
-        <h3>Step 2: Take Turns Shooting</h3>
-        <p>Click on your opponent’s grid to fire. A hit marks a red cell. Misses are grey.</p>
-      </div>
-      <img src="https://via.placeholder.com/300x200" alt="Step 2" class="how-to-image">
-    </div>
+        <div class="back-button-wrapper">
+        <a href="#" data-section="home" class="menu-link">← Back to Home</a>
+        </div>
+        <div class="how-to-step from-right">
+        <div class="how-to-text">
+            <h3>Step 2: Take Turns Shooting</h3>
+            <p>Click on your opponent’s grid to fire. A hit marks a red cell. Misses are grey.</p>
+        </div>
+        <img src="https://via.placeholder.com/300x200" alt="Step 2" class="how-to-image">
+        </div>
 
-    <div class="how-to-step from-left">
-      <img src="https://via.placeholder.com/300x200" alt="Step 3" class="how-to-image">
-      <div class="how-to-text">
-        <h3>Step 3: Sink All Enemy Ships</h3>
-        <p>The first player to destroy all enemy ships wins the battle!</p>
-      </div>
-    </div>
+        <div class="how-to-step from-left">
+        <img src="https://via.placeholder.com/300x200" alt="Step 3" class="how-to-image">
+        <div class="how-to-text">
+            <h3>Step 3: Sink All Enemy Ships</h3>
+            <p>The first player to destroy all enemy ships wins the battle!</p>
+        </div>
+        </div>
 
-    <div class="back-button-wrapper">
-      <a href="#" data-section="home" class="menu-link">← Back to Home</a>
-    </div>
-    <div class="how-to-step from-right">
-      <div class="how-to-text">
-        <h3>Step 2: Take Turns Shooting</h3>
-        <p>Click on your opponent’s grid to fire. A hit marks a red cell. Misses are grey.</p>
-      </div>
-      <img src="https://via.placeholder.com/300x200" alt="Step 2" class="how-to-image">
-    </div>
+        <div class="back-button-wrapper">
+        <a href="#" data-section="home" class="menu-link">← Back to Home</a>
+        </div>
+        <div class="how-to-step from-right">
+        <div class="how-to-text">
+            <h3>Step 2: Take Turns Shooting</h3>
+            <p>Click on your opponent’s grid to fire. A hit marks a red cell. Misses are grey.</p>
+        </div>
+        <img src="https://via.placeholder.com/300x200" alt="Step 2" class="how-to-image">
+        </div>
 
-    <div class="how-to-step from-left">
-      <img src="https://via.placeholder.com/300x200" alt="Step 3" class="how-to-image">
-      <div class="how-to-text">
-        <h3>Step 3: Sink All Enemy Ships</h3>
-        <p>The first player to destroy all enemy ships wins the battle!</p>
-      </div>
-    </div>
+        <div class="how-to-step from-left">
+        <img src="https://via.placeholder.com/300x200" alt="Step 3" class="how-to-image">
+        <div class="how-to-text">
+            <h3>Step 3: Sink All Enemy Ships</h3>
+            <p>The first player to destroy all enemy ships wins the battle!</p>
+        </div>
+        </div>
 
-    <div class="back-button-wrapper">
-      <a href="#" data-section="home" class="menu-link">← Back to Home</a>
-    </div>
-  </div>
+        <div class="back-button-wrapper">
+        <a href="#" data-section="home" class="menu-link">← Back to Home</a>
+        </div>
+    </div>  
 `,
 
 };
@@ -170,4 +170,22 @@ function bindPageTransitionLinks() {
       });
     });
   }
+
+
+  document.addEventListener("scroll", () => {
+    const scrollContainer = document.querySelector('.curved-scroll');
+    if (!scrollContainer) return;
+  
+    const items = scrollContainer.querySelectorAll('*');
+  
+    items.forEach(item => {
+      const rect = item.getBoundingClientRect();
+      const containerCenter = window.innerHeight / 2;
+      const distance = rect.top - containerCenter;
+  
+      // Apply a very slight curve based on distance from center
+      const curve = (distance / 600) * 5; // tweak multiplier for more curve
+      item.style.transform = `rotateX(${curve}deg)`;
+    });
+  }, true); // useCapture: true to catch scroll inside .curved-scroll
   

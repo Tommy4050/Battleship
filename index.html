@@ -11,8 +11,8 @@
     <script src="./scripts/load.js" defer></script>
     <title>Torpedó</title>
 </head>
-<body>
-    <div id="arcade">
+<body class="home-page">
+    <!-- <div id="arcade">
         <div id="menuContent" class="centered arcade-screen">
             <h1>Battleship</h1>
             <nav>
@@ -21,16 +21,36 @@
             </nav>
           </div>
           <main class="content" id="content">
-            <!-- Itt cserél csak az itteni tartalmat rakd a js-be -->
-             <!--
+            
+             
                 A How to play résznél van egy hidden-element osztály nem muszáj használnod (A load.js-be hosszárendel egy css osztályt és "láthatóvá" teszi, amikor 20% - a viewportba van).
                 Csak placeholder képeket rakj bele, majd csinálunk a kész játékról screenshot-ot. (images mappa).
-             -->
+             
         </main>
           <div id="loadingScreen" class="loading hidden">
             <div class="loader">Loading...</div>
           </div>
-    </div>
+    </div> -->
+    <div id="arcade">
+        <div id="arcade-container">
+          <img src="./images/gameboy.svg" alt="game boy frame" id="gameboy-frame">
+          <div class="arcade-screen">
+            <div id="menuContent" class="centered">
+              <h1>Battleship</h1>
+              <nav>
+                <a href="./battleship.html" data-transition="true">Play Game</a>
+                <a href="#" data-section="howToPlay">How To Play</a>
+              </nav>
+            </div>
+            <main class="content" id="content">
+            </main>
+          </div>
+          <div id="loadingScreen" class="loading hidden">
+            <div class="loader">Loading...</div>
+          </div>
+        </div>
+      </div>
+      
     <script>
         document.addEventListener("DOMContentLoaded", () => {
           const links = document.querySelectorAll('a[data-transition="true"]');
@@ -42,9 +62,9 @@
               e.preventDefault();
       
               const target = link.getAttribute("href");
-
-              menu.classList.add("exit");
       
+              // 1. Zoom & fade out menu
+              menu.classList.add("exit");
               setTimeout(() => {
                 loading.classList.remove("hidden");
               }, 300);
