@@ -26,6 +26,39 @@ document.addEventListener('DOMContentLoaded', () => {
     let dragOverCell = null;
     
 
+    const sizesAndNames = [
+        { size: 5, name: 'carrier', width: '65px', height: '400px', horizontalTransform: 'translate(-8px, -325px)', verticalTransform: 'translate(-10px, -75px)', shipyardConfig: {
+            width: '40px', height: '130px', transform: 'rotate(0deg) translate(0px, 0px)'
+        }},
+        { size: 4, name: 'battleship', width: '50px', height: '225px', horizontalTransform: 'translate(0px, -215px)', verticalTransform: 'translate(0px, -10px)', shipyardConfig: {
+            width: '20px', height: '120px', transform: 'rotate(0deg) translate(0px, 0px)'
+        }},
+        { size: 3, name: 'cruser', width: '50px', height: '170px', horizontalTransform: 'translate(0px, -160px)', verticalTransform: 'translate(0px, -10px)', shipyardConfig: {
+            width: '20px', height: '100px', transform: 'rotate(0deg) translate(0px, 0px)'
+        }},
+        { size: 3, name: 'cruser', width: '50px', height: '170px', horizontalTransform: 'translate(0px, -160px)', verticalTransform: 'translate(0px, -10px)', shipyardConfig: {
+            width: '20px', height: '100px', transform: 'rotate(0deg) translate(0px, 0px)'
+        }},
+        { size: 3, name: 'submarine', width: '50px', height: '170px', horizontalTransform: 'translate(0px, -160px)', verticalTransform: 'translate(0px, -10px)', shipyardConfig: {
+            width: '20px', height: '100px', transform: 'rotate(0deg) translate(0px, 0px)'
+        }},
+        { size: 3, name: 'submarine', width: '50px', height: '170px', horizontalTransform: 'translate(0px, -160px)', verticalTransform: 'translate(0px, -10px)', shipyardConfig: {
+            width: '20px', height: '100px', transform: 'rotate(0deg) translate(0px, 0px)'
+        }},
+        { size: 3, name: 'submarine', width: '50px', height: '170px', horizontalTransform: 'translate(0px, -160px)', verticalTransform: 'translate(0px, -10px)', shipyardConfig: {
+            width: '20px', height: '100px', transform: 'rotate(0deg) translate(0px, 0px)'
+        }},
+        { size: 2, name: 'destroyer', width: '50px', height: '125px', horizontalTransform: 'translate(0px, -115px)', verticalTransform: 'translate(0px, -15px)', shipyardConfig: {
+            width: '20px', height: '100px', transform: 'rotate(0deg) translate(0px, 0px)'
+        }},
+        { size: 2, name: 'destroyer', width: '50px', height: '125px', horizontalTransform: 'translate(0px, -115px)', verticalTransform: 'translate(0px, -15px)', shipyardConfig: {
+            width: '20px', height: '100px', transform: 'rotate(0deg) translate(0px, 0px)'
+        }},
+        { size: 2, name: 'destroyer', width: '50px', height: '125px', horizontalTransform: 'translate(0px, -115px)', verticalTransform: 'translate(0px, -15px)', shipyardConfig: {
+            width: '20px', height: '100px', transform: 'rotate(0deg) translate(0px, 0px)'
+        }}
+    ];
+
 
     let targetIndex = 0;
     let targetPlayer = null;
@@ -329,25 +362,27 @@ document.addEventListener('DOMContentLoaded', () => {
     
                         if (allHit) {
                             ship.positions.forEach(pos => {
-                                const c = opponentGrid.querySelector(`.cell[data-index="${pos}"]`);
-                                c.classList.remove('hit');
-                                c.classList.add('sunk');
-                                cell.classList.remove('hidden-ship');
+                                const cell = opponentGrid.querySelector(`.cell[data-index="${pos}"]`);
+                                cell.classList.remove('hit');
+                                cell.classList.add('sunk');
+                            
                                 const img = cell.querySelector('.ship-image');
                                 if (img) img.classList.remove('hidden-ship');
-
                             });
-    
-                            const shipImage = opponentGrid.querySelector(
-                                `.ship-image[data-index="${ship.positions[0]}"]`
-                            );
-    
+                            let shipImage = null;
+                            for (const pos of ship.positions) {
+                                const cell = opponentGrid.querySelector(`.cell[data-index="${pos}"]`);
+                                const img = cell.querySelector('.ship-image');
+                                if (img) {
+                                    shipImage = img;
+                                    break;
+                                }
+                            }
                             if (shipImage) {
                                 const name = shipImage.dataset.name;
                                 shipImage.src = `./images/ships/${name}_destroyed.svg`;
                             }
                         }
-    
                         break;
                     }
                 }
@@ -439,21 +474,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const innerShipyard = document.createElement('div');
         
         innerShipyard.className = 'shipyard-ships';
-    
-        const ships = [
-            { size: 5, name: 'carrier' },
-            { size: 4, name: 'battleship' },
-            { size: 3, name: 'cruser' },
-            { size: 3, name: 'cruser' },
-            { size: 3, name: 'submarine' },
-            { size: 3, name: 'submarine' },
-            { size: 3, name: 'submarine' },
-            { size: 2, name: 'destroyer' },
-            { size: 2, name: 'destroyer' },
-            { size: 2, name: 'destroyer' },
-        ];
-    
-        ships.forEach(ship => {
+        
+        sizesAndNames.forEach(ship => {
+            const config = sizesAndNames.find(s => s.size == ship.size && s.name == ship.name);
+            const shipyardConfig = config?.shipyardConfig || {}
             const shipDiv = document.createElement('div');
             shipDiv.className = 'draggable-ship';
             shipDiv.draggable = true;
@@ -463,11 +487,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = document.createElement('img');
             img.src = `./images/ships/${ship.name}.svg`;
             img.alt = ship.name;
-            img.style.width = `200px`;
-            img.style.height = `150px`;
-            img.style.transform = `rotate(90deg)`;
-            img.style.transform += `translate(-50px, 50px)`
-            img.style.b
+            img.style.width = shipyardConfig?.width || '200px';
+            img.style.height = shipyardConfig?.height || '150px';
+            img.style.transform = shipyardConfig.transform || 'rotate(90deg)';
     
             shipDiv.appendChild(img);
             shipyard.appendChild(innerShipyard);
@@ -563,19 +585,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function randomizeShips(player) {
         resetPlayerBoard(player);
     
-        const sizesAndNames = [
-            { size: 5, name: 'carrier' },
-            { size: 4, name: 'battleship' },
-            { size: 3, name: 'cruser' },
-            { size: 3, name: 'cruser' },
-            { size: 3, name: 'submarine' },
-            { size: 3, name: 'submarine' },
-            { size: 3, name: 'submarine' },
-            { size: 2, name: 'destroyer' },
-            { size: 2, name: 'destroyer' },
-            { size: 2, name: 'destroyer' },
-        ];
-    
         const grid = document.getElementById(`grid${player}`);
         const occupied = playerBoards[player];
     
@@ -616,7 +625,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
     
             if (!placed) {
-                console.warn(`⚠️ Failed to place ship: ${ship.name}`);
+                console.warn(`Failed to place ship: ${ship.name}`);
             }
         }
     
@@ -650,55 +659,22 @@ document.addEventListener('DOMContentLoaded', () => {
         shipImage.style.pointerEvents = 'none';
         shipImage.style.top = '0';
         shipImage.style.left = '0';
+
+        const config = sizesAndNames.find(s => s.size === size && s.name == name);
     
         if (orientation === 'horizontal') {
-            shipImage.style.width = `${400}px`;
-            shipImage.style.height = `${300}px`;
-            shipImage.style.transform = 'rotate(90deg)';
-            shipImage.style.transformOrigin = 'top left';
-            shipImage.style.transform += addShipImageHelper(size, orientation, name);
+            shipImage.style.width = config?.width || '400px';
+            shipImage.style.height = config?.height || '300px';
+            shipImage.style.transform = `rotate(90deg) ${config?.horizontalTransform || ''}`
         } else {
-            shipImage.style.width = `${400}px`;
-            shipImage.style.height = `${300}px`;
-            shipImage.style.transform = 'rotate(0deg)';
-            shipImage.style.transformOrigin = 'top left';
-            shipImage.style.transform += addShipImageHelper(size, orientation, name);
+            shipImage.style.width = config?.width ||'400px';
+            shipImage.style.height = config?.height || '300px';
+            shipImage.style.transform = `rotate(0deg) ${config?.verticalTransform || ''}`
         }
+        shipImage.style.transformOrigin = 'top left';
     
         cell.style.position = 'relative'; 
         cell.appendChild(shipImage);
-    }
-    
-    // Az AddShipImage segéd függvénye segít a mértezésben orientáció szerint
-    function addShipImageHelper(size, orientation, name) {
-        if(orientation === 'horizontal') {
-            switch(size && name) {
-                case 2 && 'destroyer':
-                    return `translate(-170px, -200px)`;
-                case 3 && 'submarine':
-                    return `translate(-165px, -170px)`;    
-                case 3 && 'cruser':
-                    return `translate(-172px, -210px)`;
-                case 4 && 'battleship':
-                    return `translate(-175px, -245px)`;
-                case 5 &&'carrier':
-                    return `translate(-180px, -270px)`;
-            }
-        } else {
-            switch(size && name) {
-                case 2 && 'destroyer':
-                    return `translate(-170px, -100px)`;
-                case 3 && 'submarine':
-                    return `translate(-165px, -25px)`;
-                case 3 && 'cruser':
-                    return `translate(-172px, -60px)`;
-                case 4 && 'battleship':
-                    return `translate(-175px, -45px)`;
-                case 5 && 'carrier':
-                    return `translate(-182px, -20px)`;
-            }
-        }
-        
     }
     
     function checkShipPlacementComplete() {

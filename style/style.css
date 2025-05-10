@@ -48,8 +48,13 @@ body {
     padding: 0 15rem 0 15rem;
 }
 
+body.battleship-page {
+    padding: 0;
+  }
+  
+
 body.battleship-page .arcade-screen {
-    width: 100vw;              
+    width: 1600px;              
     max-width: none;           
     height: 100vh;             
     margin: 0 auto;            
@@ -65,7 +70,6 @@ body.battleship-page .arcade-screen {
   
   body.battleship-page .player-board {
     flex: 1 1 48%;
-    max-width: 48%;
   }
   
 
@@ -184,53 +188,67 @@ a:hover {
 /*---------*/
 
 /* Torpedó */
-.player-board{
+.player-board {
+    flex: 1 1 45%;
+    max-width: 600px;
+    min-width: 300px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
 }
 
 .game-buttons {
-    margin-top: 10px;
-    margin-left: 50px;
     display: flex;
     justify-content: flex-start;
     align-items: baseline;
     gap: 10px;
 }
+
 .game-button {
     width: 60px;
     height: auto;
 }
+
 .deploy-button {
     height: 30px;
     width: auto;
 }
 
 .draggable-ship {
-    width: 100px;
-    height: 40px;
-    background-color: steelblue;
-    background-size: contain;
-    margin: 5px;
-    color: white;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: grab;
+    padding: 0.5rem;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    transition: background-color 0.2s ease;
 }
-
+  
+.draggable-ship:hover {
+    background-color: rgba(0, 255, 255, 0.1);
+}
+  
+.draggable-ship:active {
+    cursor: grabbing;
+}
 
 .container {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+    width: 100%;
 }
-
+  
 .grid {
     display: grid;
     grid-template-columns: repeat(10, 50px);
     gap: 1px;
-    width: 385px;
+    width: 600px;
 }
 
 .cell {
@@ -286,25 +304,52 @@ a:hover {
 }
 
 #shot-logging {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 40px;
-}
-
-#shot-log {
+    background-color: rgba(16, 24, 40, 0.8);
+    border: 2px solid #00ffff88;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 2rem auto 0 auto;
+    color: #00ffff;
+    font-family: 'Press Start 2P', monospace;
     max-height: 200px;
     overflow-y: auto;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    padding: 10px;
-    min-width: 500px;
-    min-height: 70px;
-    margin: 0 auto;
-    text-align: left;
-    background-color: white;
+    box-shadow: inset 0 0 12px rgba(0, 255, 255, 0.2);
+    width: 90%;
+    max-width: 600px;
 }
+  
+#shot-logging::-webkit-scrollbar {
+    width: 6px;
+}
+
+#shot-logging::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 255, 255, 0.3);
+    border-radius: 5px;
+}
+  
+#shot-log {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+  
+#shot-log li {
+    font-size: 0.6rem;
+    margin-bottom: 0.5rem;
+    padding-left: 1rem;
+    position: relative;
+    color: #00ffffcc;
+    word-break: break-word;
+}
+  
+/* Custom bullet icon */
+#shot-log li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #00ffff99;
+}
+  
 
 .ship-image {
     object-fit: contain;
@@ -333,29 +378,41 @@ a:hover {
     position: relative;
 }
 /*---------*/
-
 .shipyard {
-    margin-left: 30px;
-    margin-bottom: 20px;
+    background-color: rgba(16, 24, 40, 0.8); /* dark semi-transparent */
+    padding: 1rem;
+    margin-top: 170px;
+    border: 2px solid #00ffff55;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    color: #00ffff;
+    /* width: 100%; */
+    min-height: 220px;
+    min-width: 600px;
+}
+
+.shipyard h3 {
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 4px #00ffff;
+}
+
+.inner-shipyard {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 1.2rem;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    max-width: 600px;
-    min-height: 200px;
-    min-width: 600px;
-    background-color: #212121;
-}
+    justify-content: center;
+  }
+  
 
 .shipyard-ships {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 18px;
 }
-
-
 
 .target-cell {
     outline: 3px solid yellow;
@@ -452,12 +509,12 @@ a:hover {
   
   
 
-  .centered.exit {
+.centered.exit {
     transform: scale(1.2);
     opacity: 0;
-  }
+}
   
-  .loading {
+.loading {
     position: fixed;
     top: 0;
     left: 0;
@@ -472,52 +529,52 @@ a:hover {
     width: 100vw;
     height: 100vh;
     transition: opacity 0.3s ease;
-  }
+}
   
-  .hidden {
+.hidden {
     display: none;
-  }
+}
 
-  #content {
+#content {
     width: 100%;
     height: 100%;
     overflow: hidden;
-  }
+}
 
-  .section-content {
+.section-content {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeIn 0.5s ease-out forwards;
-  }
+}
   
-  @keyframes fadeIn {
+@keyframes fadeIn {
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
-  
-  .centered {
+}
+
+.centered {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     text-align: center;
-  }
-  
-  .section-content {
+}
+
+.section-content {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeIn 0.5s ease-out forwards;
-  }
-  
-  @keyframes fadeIn {
+}
+
+@keyframes fadeIn {
     to {
-      opacity: 1;
-      transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
-  }
+}
   
   
 .how-to-play-container {
@@ -527,14 +584,14 @@ a:hover {
     box-sizing: border-box;
     background-color: #101828;
     color: #fff;
-  }
-  
-  .how-to-play-title {
+}
+
+.how-to-play-title {
     text-align: center;
     margin-bottom: 2rem;
-  }
-  
-  .how-to-step {
+}
+
+.how-to-step {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -543,38 +600,83 @@ a:hover {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeInSlide 0.8s ease-out forwards;
-  }
-  
-  .how-to-step:nth-child(even) {
+}
+
+.how-to-step:nth-child(even) {
     flex-direction: row-reverse;
-  }
-  
-  .how-to-image {
+}
+
+.how-to-image {
     width: 40%;
     max-width: 300px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  }
-  
-  .how-to-text {
+}
+
+.how-to-text {
     width: 50%;
-  }
-  
-  .back-button-wrapper {
+}
+
+.back-button-wrapper {
     text-align: center;
     margin-top: 3rem;
-  }
+}
   
-  .back-button-wrapper a {
+.back-button-wrapper a {
     font-size: 1rem;
     color: #00bfff;
     text-decoration: none;
-  }
+}
   
-  @keyframes fadeInSlide {
+@keyframes fadeInSlide {
     to {
       opacity: 1;
       transform: translateY(0);
     }
-  }
+}
+
+.arcade-button {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    background-color: #101828;
+    color: #00ffff;
+    border: 2px solid #00ffff88;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    box-shadow: 0 0 10px #00ffff33;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 0.5rem;
+}
+  
+.arcade-button:hover:not(:disabled) {
+    background-color: #00ffff;
+    color: #101828;
+    box-shadow: 0 0 12px #00ffffaa;
+}
+  
+.arcade-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+    background-color: #333;
+    color: #aaa;
+}
+  
+.deploy-button {
+    border-color: #00ff88;
+    color: #00ff88;
+}
+  
+.deploy-button:hover:not(:disabled) {
+    background-color: #00ff88;
+    color: #101828;
+    box-shadow: 0 0 12px #00ff88aa;
+}
+
+.arcade-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 15px 4px #00ffffaa;
+}
   
