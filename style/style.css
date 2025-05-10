@@ -91,7 +91,6 @@ body.home-page #arcade {
     width: 100vw;
     height: 100vh;
     background-color: #101828;
-    overflow: hidden;
     position: relative;
   }
   
@@ -139,9 +138,8 @@ body.home-page #arcade {
     width: 100vw;
     height: 100vh;
     background-color: var(--secondary-bg);
-    overflow: hidden;
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   
   .arcade-screen {
