@@ -1,39 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./images/icons/anchor.ico" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Micro+5&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./images/icons/anchor.ico"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Micro+5&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style/style.css" />
     <script src="./scripts/load.js" defer></script>
     <title>Torpedó</title>
-</head>
-<body class="home-page">
-    <!-- <div id="arcade">
-        <div id="menuContent" class="centered arcade-screen">
-            <h1>Battleship</h1>
-            <nav>
-                <a href="./battleship.html" data-transition="true">Play Game</a>
-                <a href="#" data-section="howToPlay">How To Play</a>
-            </nav>
-          </div>
-          <main class="content" id="content">
-            
-             
-                A How to play résznél van egy hidden-element osztály nem muszáj használnod (A load.js-be hosszárendel egy css osztályt és "láthatóvá" teszi, amikor 20% - a viewportba van).
-                Csak placeholder képeket rakj bele, majd csinálunk a kész játékról screenshot-ot. (images mappa).
-             
-        </main>
-          <div id="loadingScreen" class="loading hidden">
-            <div class="loader">Loading...</div>
-          </div>
-    </div> -->
-    <div id="arcade">
+  </head>
+  <body class="home-page">
+    <div id="arcadeFadeWrapper">
+      <div id="arcade">
         <div id="arcade-container">
-          <img src="./images/gameboy.svg" alt="game boy frame" id="gameboy-frame">
+          <img
+            src="./images/gameboy.svg"
+            alt="game boy frame"
+            id="gameboy-frame"
+          />
           <div class="arcade-screen">
             <div id="menuContent" class="centered">
               <h1>Battleship</h1>
@@ -42,43 +35,49 @@
                 <a href="#" data-section="howToPlay">How To Play</a>
               </nav>
             </div>
-            <main class="content" id="content">
-            </main>
+            <main class="content" id="content"></main>
           </div>
           <div id="loadingScreen" class="loading hidden">
-            <div class="loader">Loading...</div>
+            <div class="loader"></div>
+            <p class="loading-text">LOADING...</p>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- <audio id="menuMusic" src="./audio/menu.mp3" autoplay loop></audio> -->
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-          const links = document.querySelectorAll('a[data-transition="true"]');
-          const menu = document.getElementById("menuContent");
-          const loading = document.getElementById("loadingScreen");
-      
-          links.forEach(link => {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-      
-              const target = link.getAttribute("href");
-      
-              // 1. Zoom & fade out menu
-              menu.classList.add("exit");
-              setTimeout(() => {
-                loading.classList.remove("hidden");
-              }, 300);
-      
-              // 3. Navigate to new page
-              setTimeout(() => {
-                window.location.href = target;
-              }, 900);
-            });
+      document.addEventListener("DOMContentLoaded", () => {
+        const links = document.querySelectorAll('a[data-transition="true"]');
+        const menu = document.getElementById("menuContent");
+        const loading = document.getElementById("loadingScreen");
+
+        links.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const target = link.getAttribute("href");
+
+            menu.classList.add("exit");
+
+            setTimeout(() => {
+              loading.classList.add("visible");
+              loading.classList.remove("hidden");
+            }, 300);
+
+            setTimeout(() => {
+              window.location.href = target;
+            }, 1000);
           });
         });
-      </script>
-      
-      
-
-</body>
+      });
+      // window.addEventListener('DOMContentLoaded', () => {
+      // const music = new Audio('./audio/menu.mp3');
+      // music.volume = 0.5;
+      // music.loop = true;
+      // music.play();
+      // });
+    </script>
+    <script src="./scripts/menuMusic.js"></script>
+  </body>
 </html>

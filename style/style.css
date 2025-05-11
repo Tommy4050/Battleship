@@ -1,733 +1,815 @@
 :root {
-    /*Cursors*/
-    --cursor-main: url(../images/cursors/cursor.svg);
-    --cursor-pointer: url(../images/cursors/pointer.svg);
-    
-    /*Tiles*/
-    --water: url(../images/tiles/water_tile.svg);
-    --ship: url(../images/tiles/ship_tile.svg);
-    --hit: url(../images/tiles/shipHit_tile.svg);
-    --sunk: url(../images/tiles/destroyed.svg);
-    --miss: url(../images/tiles/shipMiss_tile.svg);
+  /*Cursors*/
+  --cursor-main: url(../images/cursors/cursor.svg);
+  --cursor-pointer: url(../images/cursors/pointer.svg);
 
-    /*Buttons*/
-    --reset-button: url(../images/buttons/resetbutton.svg);
-    --randomize-button: url(../images/buttons/randombutton.svg);
-    --deploy-button: url(../images/buttons/deploybutton.svg);
+  /*Tiles*/
+  --water: url(../images/tiles/water_tile.svg);
+  --ship: url(../images/tiles/ship_tile.svg);
+  --hit: url(../images/tiles/shipHit_tile.svg);
+  --sunk: url(../images/tiles/destroyed.svg);
+  --miss: url(../images/tiles/shipMiss_tile.svg);
 
-    /*Colors*/
-    --primary-bg: #101828;
-    --secondary-bg: #212121;
-    --primary-text: #212121;
+  /*Buttons*/
+  --reset-button: url(../images/buttons/resetbutton.svg);
+  --randomize-button: url(../images/buttons/randombutton.svg);
+  --deploy-button: url(../images/buttons/deploybutton.svg);
+
+  /*Colors*/
+  --primary-bg: #101828;
+  --secondary-bg: #212121;
+  --primary-text: #212121;
 }
 
 .press-start-2p-regular {
-    font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .micro-5-regular {
-    font-family: "Micro 5", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}  
+  font-family: "Micro 5", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-    cursor: var(--cursor-main);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  cursor: var(--cursor-main);
+}
+
+button:hover {
+  cursor: var(--cursor-pointer) 12 12, auto;
 }
 
 body {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    cursor: var(--cursor-main) 12 12, auto;
-    background-color: var(--secondary-bg);
-    padding: 0 15rem 0 15rem;
-    overflow-x: hidden;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  cursor: var(--cursor-main) 12 12, auto;
+  background-color: var(--secondary-bg);
+  padding: 0 15rem 0 15rem;
+  overflow-x: hidden;
 }
 
 body.battleship-page {
-    padding: 0;
-  }
-  
-
-body.battleship-page .arcade-screen {
-    width: 1600px;              
-    max-width: none;           
-    height: 100vh;             
-    margin: 0 auto;            
-    padding: 2rem;
-    box-sizing: border-box;
-    background-color: var(--primary-bg);
-  }
-  
-
-  body.battleship-page .container {
-    gap: 2rem;
-    justify-content: space-between;
-  }
-  
-  body.battleship-page .player-board {
-    flex: 1 1 48%;
-  }
-  
-
-main {
-    background-color: var(--primary-bg);
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 5rem;
+  padding: 0;
 }
 
-select, label {
-    display: none;
+body.battleship-page .arcade-screen {
+  width: 1600px;
+  max-width: none;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
+  background-color: var(--primary-bg);
+}
+
+body.battleship-page .container {
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+body.battleship-page .player-board {
+  flex: 1 1 48%;
+}
+
+main {
+  background-color: var(--primary-bg);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 5rem;
+}
+
+select,
+label {
+  display: none;
 }
 /*index.html*/
 body.home-page #arcade {
-    width: 100vw;
-    height: 100vh;
-    background-color: #101828;
-    position: relative;
-  }
-  
-  body.home-page #arcade-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: var(--secondary-bg);
-  }
-  
-  body.home-page #gameboy-frame {
-    width: auto;
-    height: 1900px;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 0;
-    pointer-events: none;
-  }
-  
-  body.home-page .arcade-screen {
-    position: absolute;
-    top: 210px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 793px;
-    height: 530px;
-    background: url('../images/screen_bg.gif') no-repeat center center;
-    background-size: cover;
-    border-radius: 8px;
-    z-index: 1;
-    padding: 1rem;
-    overflow-y: auto;
-    font-family: 'Press Start 2P', monospace;
-    color: white;
-    box-shadow: inset 0 0 12px rgba(0,255,255,0.2);
-    overflow-y: hidden;
-  }
-  
+  width: 100vw;
+  height: 100vh;
+  background-color: #101828;
+  position: relative;
+}
+
+body.home-page #arcade-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--secondary-bg);
+}
+
+body.home-page #gameboy-frame {
+  width: auto;
+  height: 1900px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+body.home-page .arcade-screen {
+  position: absolute;
+  top: 210px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 793px;
+  height: 530px;
+  background: url("../images/screen_bg.gif") no-repeat center center;
+  background-size: cover;
+  border-radius: 8px;
+  z-index: 1;
+  padding: 1rem;
+  overflow-y: auto;
+  font-family: "Press Start 2P", monospace;
+  color: white;
+  box-shadow: inset 0 0 12px rgba(0, 255, 255, 0.2);
+  overflow-y: hidden;
+}
 
 #arcade {
-    background-size: auto;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--secondary-bg);
-    position: relative;
-    /* overflow: hidden; */
-  }
-  
-  .arcade-screen {
-    width: 75vw;
-    max-width: 1000px;
-    height: 80vh;
-    background-size: cover;
-    border-radius: 12px;
-    box-shadow: inset 0 0 30px rgba(0, 255, 255, 0.2);
-    overflow-y: auto;
-    color: white;
-    font-family: 'Press Start 2P', monospace;
-    padding: 2rem;
+  background-size: auto;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--secondary-bg);
+  position: relative;
+}
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  
-    text-align: center;
-    z-index: 2;
-  }
-  
-  
-  .arcade-screen::-webkit-scrollbar {
-    width: 8px;
-  }
-  .arcade-screen::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-  }
-  
-  .arcade-screen::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-      rgba(255,255,255,0.02) 0px,
-      rgba(255,255,255,0.02) 1px,
-      transparent 2px,
-      transparent 4px
-    );
-    z-index: 1;
-    pointer-events: none;
-  }
-  
+.arcade-screen {
+  width: 75vw;
+  max-width: 1000px;
+  height: 80vh;
+  background-size: cover;
+  border-radius: 12px;
+  box-shadow: inset 0 0 30px rgba(0, 255, 255, 0.2);
+  overflow-y: auto;
+  color: white;
+  font-family: "Press Start 2P", monospace;
+  padding: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  z-index: 2;
+}
+
+.arcade-screen::-webkit-scrollbar {
+  width: 8px;
+}
+.arcade-screen::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+.arcade-screen::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(255, 255, 255, 0.02) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  z-index: 1;
+  pointer-events: none;
+}
 
 h1 {
-    font-size: 52px;
-    text-transform: uppercase;
+  font-size: 52px;
+  text-transform: uppercase;
 }
 
 nav {
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
-a:link, a:visited, a:active {
-    text-decoration: none;
-    color: var(--primary-text);
-    background-color: orange;
-    border: 3px solid black;
-    border-radius: 5px;
-    padding: 0.3rem;
+a:link,
+a:visited,
+a:active {
+  text-decoration: none;
+  color: var(--primary-text);
+  background-color: orange;
+  border: 3px solid black;
+  border-radius: 5px;
+  padding: 0.3rem;
+}
+
+body.battleship-page a,
+body.battleship-page .content a:not(.button-link) {
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+  color: var(--primary-text);
+  border-radius: 5px;
+  padding: 0.3rem;
+}
+
+body.battleship-page a:hover {
+  color: aliceblue;
+  cursor: var(--cursor-pointer);
 }
 
 a:hover {
-    background-color: orangered;
-    color: aliceblue;
-    cursor: var(--cursor-pointer);
+  background-color: orangered;
+  color: aliceblue;
+  cursor: var(--cursor-pointer);
 }
 
 /*Battleship*/
 
-
 /* Általános */
 .content {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s, transform 0.5s;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s, transform 0.5s;
 }
 
 .content.visible {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 /*---------*/
 
 /* Torpedó */
 .player-board {
-    flex: 1 1 45%;
-    max-width: 600px;
-    min-width: 300px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex: 1 1 45%;
+  max-width: 600px;
+  min-width: 300px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .game-buttons {
-    display: flex;
-    justify-content: flex-start;
-    align-items: baseline;
-    gap: 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 10px;
 }
 
 .game-button {
-    width: 60px;
-    height: auto;
+  width: 60px;
+  height: auto;
 }
 
 .deploy-button {
-    height: 30px;
-    width: auto;
+  height: 30px;
+  width: auto;
 }
 
 .draggable-ship {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: grab;
-    padding: 0.5rem;
-    border: 1px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.05);
-    transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+  padding: 0.5rem;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: background-color 0.2s ease;
 }
-  
+
 .draggable-ship:hover {
-    background-color: rgba(0, 255, 255, 0.1);
+  background-color: rgba(0, 255, 255, 0.1);
+  cursor: var(--cursor-pointer) 12 12, auto;
 }
-  
+
 .draggable-ship:active {
-    cursor: grabbing;
+  cursor: var(--cursor-main) 12 12, auto;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 2rem;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 100%;
 }
-  
+
 .grid {
-    display: grid;
-    grid-template-columns: repeat(10, 50px);
-    gap: 1px;
-    width: 600px;
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  gap: 1px;
+  width: 600px;
 }
 
 .cell {
-    width: 50px;
-    height: 50px;
-    background-image: var(--water);
-    border: 0.5px solid #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: var(--cursor-pointer) 12 12, auto;
+  width: 50px;
+  height: 50px;
+  background-image: var(--water);
+  border: 0.5px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: var(--cursor-pointer) 12 12, auto;
 }
 
 .ship {
-    background-image: var(--ship);
+  background-image: var(--ship);
 }
 
 .hit {
-    background-image: var(--hit);
+  background-image: var(--hit);
 }
 
 .cell.hidden-ship.ship {
-    background-image: var(--water);
+  background-image: var(--water);
 }
 
 .ship-image.hidden-ship {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .cell.hit {
-    background-image: var(--hit) !important;
-    background-size: cover;
+  background-image: var(--hit) !important;
+  background-size: cover;
 }
 
 .cell.sunk {
-    background-image: var(--sunk) !important;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+  background-image: var(--sunk) !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-
 .cell.sunk {
-    background-image: var(--sunk);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+  background-image: var(--sunk);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .miss {
-    background-image: var(--miss);
+  background-image: var(--miss);
 }
 
 #shot-logging {
-    background-color: rgba(16, 24, 40, 0.8);
-    border: 2px solid #00ffff88;
-    border-radius: 10px;
-    padding: 1rem;
-    margin: 2rem auto 0 auto;
-    color: #00ffff;
-    font-family: 'Press Start 2P', monospace;
-    max-height: 200px;
-    overflow-y: auto;
-    box-shadow: inset 0 0 12px rgba(0, 255, 255, 0.2);
-    width: 90%;
-    max-width: 600px;
+  background-color: rgba(16, 24, 40, 0.8);
+  border: 2px solid #00ffff88;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 2rem auto 0 auto;
+  color: #00ffff;
+  font-family: "Press Start 2P", monospace;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: inset 0 0 12px rgba(0, 255, 255, 0.2);
+  width: 90%;
+  max-width: 600px;
 }
-  
+
 #shot-logging::-webkit-scrollbar {
-    width: 6px;
+  width: 6px;
 }
 
 #shot-logging::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 255, 255, 0.3);
-    border-radius: 5px;
+  background-color: rgba(0, 255, 255, 0.3);
+  border-radius: 5px;
 }
-  
+
 #shot-log {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-  
+
 #shot-log li {
-    font-size: 0.6rem;
-    margin-bottom: 0.5rem;
-    padding-left: 1rem;
-    position: relative;
-    color: #00ffffcc;
-    word-break: break-word;
+  font-size: 0.6rem;
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  position: relative;
+  color: #00ffffcc;
+  word-break: break-word;
 }
-  
+
 /* Custom bullet icon */
 #shot-log li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #00ffff99;
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #00ffff99;
 }
-  
 
 .ship-image {
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
-    border-radius: 4px;
-    transition: transform 0.3s ease;
-    pointer-events: none;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  transition: transform 0.3s ease;
+  pointer-events: none;
 }
 
 /*-----A hajót tratalmazó cellák és a képek elrejtése és felefedése ( még nincs kész :( ) ----*/
 .ship-hidden {
-    background-color: lightblue;
+  background-color: lightblue;
 }
 
 .ship-image-hidden {
-    opacity: 0;
+  opacity: 0;
 }
 
 .ship-image-visble {
-    opacity: 1;
+  opacity: 1;
 }
 /*---------*/
 
 .grid-wrapper {
-    position: relative;
+  position: relative;
 }
 /*---------*/
 .shipyard {
-    background-color: rgba(16, 24, 40, 0.8); /* dark semi-transparent */
-    padding: 1rem;
-    margin-top: 170px;
-    border: 2px solid #00ffff55;
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    text-align: center;
-    font-family: 'Press Start 2P', monospace;
-    color: #00ffff;
-    /* width: 100%; */
-    min-height: 220px;
-    min-width: 600px;
+  background-color: rgba(16, 24, 40, 0.8);
+  padding: 1rem;
+  margin-top: 170px;
+  border: 2px solid #00ffff55;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-family: "Press Start 2P", monospace;
+  color: #00ffff;
+  min-height: 220px;
+  min-width: 600px;
 }
 
 .shipyard h3 {
-    font-size: 0.75rem;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 4px #00ffff;
+  font-size: 0.75rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 4px #00ffff;
 }
 
 .inner-shipyard {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    align-items: center;
-    justify-content: center;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  align-items: center;
+  justify-content: center;
+}
 
 .shipyard-ships {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
 }
 
 .target-cell {
-    outline: 3px solid yellow;
-    box-sizing: border-box;
+  outline: 3px solid yellow;
+  box-sizing: border-box;
 }
-
-
 
 #victoryOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Press Start 2P", monospace;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.4s ease;
 }
-  
-#victoryOverlay.hidden {
-    display: none;
+
+#victoryOverlay.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
-  
-#victoryMessage {
-    background: white;
-    padding: 2rem 3rem;
-    border-radius: 10px;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
+
+#victoryOverlay #victoryMessage {
+  font-size: 1rem;
+  color: #00ff88;
+  text-shadow: 0 0 8px #00ffff;
+  margin-bottom: 2rem;
+}
+
+#victoryOverlay button {
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.6rem;
+  padding: 0.75rem 1.2rem;
+  background: #101828;
+  color: #00ffff;
+  border: 2px solid #00ffff88;
+  border-radius: 6px;
+  margin: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ffff44;
+  transition: all 0.2s ease;
+}
+
+#victoryOverlay button:hover {
+  background: #00ffff;
+  color: #101828;
+  box-shadow: 0 0 15px #00ffff88;
+}
+
+#victoryOverlay a {
+  text-decoration: none;
+  color: inherit;
 }
 
 #startOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 998;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  font-family: "Press Start 2P", monospace;
+  color: #00ffcc;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
 }
-  
-#startOverlay.hidden {
-    display: none;
+
+#startOverlay.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
-  
+
 #startMessage {
-    background: white;
-    padding: 2rem 3rem;
-    border-radius: 10px;
-    font-size: 2rem;
-    font-weight: bold;
-    color: navy;
-    text-align: center;
+  font-size: 0.85rem;
+  padding: 1.5rem;
+  background-color: rgba(16, 24, 40, 0.9);
+  border: 2px dashed #00ffcc88;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #00ffcc44;
+  text-shadow: 0 0 6px #00ffcc;
 }
 
 #turnOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 997;
-    color: var(--primary-text);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  font-family: "Press Start 2P", monospace;
+  color: #00ffff;
+  text-align: center;
 }
-  
-#turnOverlay.hidden {
-    display: none;
+
+#turnOverlay.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
-  
+
 #turnMessage {
-    background: white;
-    padding: 2rem 3rem;
-    border-radius: 10px;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-} 
-  
+  font-size: 0.85rem;
+  padding: 1.5rem 2rem;
+  background-color: rgba(16, 24, 40, 0.85);
+  border: 2px dashed #00ffff99;
+  border-radius: 10px;
+  box-shadow: 0 0 12px #00ffff55;
+  text-shadow: 0 0 4px #00ffff;
+  max-width: 90vw;
+}
+
 .exit {
-    transform: scale(1.2);
-    opacity: 0;
-    transition: transform 0.5s ease, opacity 0.5s ease;
-  }
-  
-  
+  transform: scale(1.2);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
 
 .centered.exit {
-    transform: scale(1.2);
-    opacity: 0;
+  transform: scale(1.2);
+  opacity: 0;
 }
-  
-.loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    background: rgba(0, 0, 0, 0.85);
-    color: white;
-    font-size: 2rem;
-    font-family: sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    transition: opacity 0.3s ease;
+
+#loadingScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Press Start 2P", monospace;
+  color: #00ffff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
 }
-  
+
+#loadingScreen.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #00ffff33;
+  border-top: 4px solid #00ffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .hidden {
-    display: none;
+  display: none;
 }
 
 #content {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .section-content {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease-out forwards;
 }
-  
+
 @keyframes fadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .centered {
-    margin-top: 85px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
+  margin-top: 85px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
 }
 
 .section-content {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 @keyframes fadeIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-  
-  
+
 .how-to-play-container {
-    max-height: 50vh;
-    max-width: 50vw;
-    overflow-y: auto;
-    padding: 4rem;
-    box-sizing: border-box;
-    border-radius: 7px;
-    background-color: #101828;
-    color: #fff;
+  max-height: 50vh;
+  max-width: 50vw;
+  overflow-y: auto;
+  padding: 4rem;
+  box-sizing: border-box;
+  border-radius: 7px;
+  background-color: #101828;
+  color: #fff;
 }
 
 .how-to-play-title {
-    text-align: center;
-    margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
 .how-to-step {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 2rem 0;
-    gap: 2rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInSlide 0.8s ease-out forwards;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem 0;
+  gap: 2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInSlide 0.8s ease-out forwards;
 }
 
 .how-to-step:nth-child(even) {
-    flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 
 .how-to-image {
-    width: 40%;
-    max-width: 300px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-}
-
-.how-to-text {
-    width: 50%;
+  width: 40%;
+  max-width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .back-button-wrapper {
-    text-align: center;
-    margin-top: 3rem;
+  text-align: center;
+  margin-top: 3rem;
 }
-  
+
 .back-button-wrapper a {
-    font-size: 1rem;
-    color: #00bfff;
-    text-decoration: none;
+  font-size: 1rem;
+  color: var(--primary-text);
+  text-decoration: none;
 }
-  
+
 @keyframes fadeInSlide {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .arcade-button {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    background-color: #101828;
-    color: #00ffff;
-    border: 2px solid #00ffff88;
-    padding: 0.6rem 1rem;
-    border-radius: 6px;
-    box-shadow: 0 0 10px #00ffff33;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    margin: 0.5rem;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  background-color: #101828;
+  color: #00ffff;
+  border: 2px solid #00ffff88;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  box-shadow: 0 0 10px #00ffff33;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0.5rem;
 }
-  
+
 .arcade-button:hover:not(:disabled) {
-    background-color: #00ffff;
-    color: #101828;
-    box-shadow: 0 0 12px #00ffffaa;
+  background-color: #00ffff;
+  color: #101828;
+  box-shadow: 0 0 12px #00ffffaa;
 }
-  
+
 .arcade-button:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    box-shadow: none;
-    background-color: #333;
-    color: #aaa;
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+  background-color: #333;
+  color: #aaa;
 }
-  
+
 .deploy-button {
-    border-color: #00ff88;
-    color: #00ff88;
+  border-color: #00ff88;
+  color: #00ff88;
 }
-  
+
 .deploy-button:hover:not(:disabled) {
-    background-color: #00ff88;
-    color: #101828;
-    box-shadow: 0 0 12px #00ff88aa;
+  background-color: #00ff88;
+  color: #101828;
+  box-shadow: 0 0 12px #00ff88aa;
 }
 
 .arcade-button:focus-visible {
-    outline: none;
-    box-shadow: 0 0 15px 4px #00ffffaa;
+  outline: none;
+  box-shadow: 0 0 15px 4px #00ffffaa;
 }
 
+#arcadeFadeWrapper {
+  opacity: 0;
+  animation: fadeInPage 1.5s ease-out forwards;
+}
 
+@keyframes fadeInPage {
+  to {
+    opacity: 1;
+  }
+}

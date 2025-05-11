@@ -1,99 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./images/icons/anchor.ico" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Micro+5&family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style/style.css">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./images/icons/anchor.ico"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Micro+5&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style/style.css" />
+
     <title>Torpedó Játék</title>
-</head>
-<body class="battleship-page">
+  </head>
+  <body class="battleship-page">
     <div id="arcade">
-        <div id="gameScreen" class="arcade-screen">
-            <main>
-                <p id="rotationStatus">Press "R" to rotate ships</p>
-                <p id="message"></p>
-                <p id="turn">Player 1: Place Your Ships</p>
-                <label for="shipType">Select Ship Type:</label>
-                <select id="shipType" multiple>
-                    <option value="5">Carrier (5 cells)</option>
-                    <option value="4">Battleship (4 cells)</option>
-                    <option value="3">Submarine (3 cells)</option>
-                    <option value="2">Destroyer (2 cells)</option>
-                </select>
-                  
-                
-                <div class="container">
-                    <div class="player-board">
-                        <div id="player1-shipyard" class="shipyard">
-                            <h3>Player 1 Ships</h3>
-                            <div class="inner-shipyard">
-                                <!-- Ships for player 1 -->
-                            </div>
-                          </div>
-                        <h2>Player 1's Board</h2>
-                        <div class="grid-wrapper">
-                            <div class="grid" id="grid1"></div>
-                        </div>
-                        <div class="game-buttons">
-                            <div class="game-buttons">
-                                <button id="reset-player1-board" class="arcade-button">Reset</button>
-                                <button id="randomize-player1" class="arcade-button">Randomize</button>
-                                <button id="deploy-player1" class="arcade-button deploy-button" disabled>Deploy</button>
-                              </div>
-                              
-                        </div>
-                    </div>
-                    <div class="player-board">
-                        <div id="player2-shipyard" class="shipyard">
-                            <h3>Player 2 Ships</h3>
-                            <div class="inner-shipyard">
-                                <!-- Ships for player 2 -->
-                            </div>
-                          </div>
-                        <h2>Player 2's Board</h2>
-                        <div class="grid-wrapper">
-                            <div class="grid" id="grid2"></div>
-                        </div>
-                        <div class="game-buttons">
-                            <button id="reset-player2-board" class="arcade-button" disabled>Reset</button>
-                            <button id="randomize-player2" class="arcade-button" disabled>Randomize</button>
-                            <button id="deploy-player2" class="arcade-button deploy-button" disabled>Deploy</button>
-                          </div>
-                          
-                    </div>
+      <div id="gameScreen" class="arcade-screen">
+        <main>
+          <p id="rotationStatus">Press "R" to rotate ships</p>
+          <p id="message"></p>
+          <p id="turn">Player 1: Place Your Ships</p>
+          <label for="shipType">Select Ship Type:</label>
+          <select id="shipType" multiple>
+            <option value="5">Carrier (5 cells)</option>
+            <option value="4">Battleship (4 cells)</option>
+            <option value="3">Submarine (3 cells)</option>
+            <option value="2">Destroyer (2 cells)</option>
+          </select>
+
+          <div class="container">
+            <div class="player-board">
+              <div id="player1-shipyard" class="shipyard">
+                <h3>Player 1 Ships</h3>
+                <div class="inner-shipyard">
+                  <!-- Ships for player 1 -->
                 </div>
-                
-                
-                <!-- battleship.js/logshot -->
-                <div id="shot-logging">
-                    <ul id="shot-log"></ul>
+              </div>
+              <h2>Player 1's Board</h2>
+              <div class="grid-wrapper">
+                <div class="grid" id="grid1"></div>
+              </div>
+              <div class="game-buttons">
+                <div class="game-buttons">
+                  <button id="reset-player1-board" class="arcade-button">
+                    Reset
+                  </button>
+                  <button id="randomize-player1" class="arcade-button">
+                    Randomize
+                  </button>
+                  <button
+                    id="deploy-player1"
+                    class="arcade-button deploy-button"
+                    disabled
+                  >
+                    Deploy
+                  </button>
                 </div>
-            
-                <div id="victoryOverlay" class="hidden">
-                    <div id="victoryMessage"></div>
-                    <button id="resetGame" onclick="{document.getElementById('victoryOverlay').classList.add('hidden')}">Reset Game</button>
-                    <button><a href="./index.html">Back to the Main Menu</a></button>
+              </div>
+            </div>
+            <div class="player-board">
+              <div id="player2-shipyard" class="shipyard">
+                <h3>Player 2 Ships</h3>
+                <div class="inner-shipyard">
+                  <!-- Ships for player 2 -->
                 </div>
-                <div id="startOverlay" class="hidden">
-                    <div id="startMessage">🚢 Let the battle begin! 🚢</div>
-                </div>
-                <div id="turnOverlay" class="hidden">
-                    <div id="turnMessage"></div>
-                </div>
-                
-                <div id="loadingScreen" class="loading hidden">
-                    <div class="loader">Loading...</div>
-                  </div>
-            </main>
-        </div>
-        
+              </div>
+              <h2>Player 2's Board</h2>
+              <div class="grid-wrapper">
+                <div class="grid" id="grid2"></div>
+              </div>
+              <div class="game-buttons">
+                <button id="reset-player2-board" class="arcade-button" disabled>
+                  Reset
+                </button>
+                <button id="randomize-player2" class="arcade-button" disabled>
+                  Randomize
+                </button>
+                <button
+                  id="deploy-player2"
+                  class="arcade-button deploy-button"
+                  disabled
+                >
+                  Deploy
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- battleship.js/logshot -->
+          <div id="shot-logging">
+            <ul id="shot-log"></ul>
+          </div>
+
+          <div id="victoryOverlay" class="hidden">
+            <div id="victoryMessage"></div>
+            <button
+              id="resetGame"
+              onclick="{document.getElementById('victoryOverlay').classList.remove('visible')}"
+            >
+              Reset Game
+            </button>
+            <button>
+              <a href="./index.html" class="">Back to the Main Menu</a>
+            </button>
+          </div>
+          <div id="startOverlay" class="hidden">
+            <div id="startMessage">🚢 Let the battle begin! 🚢</div>
+          </div>
+          <div id="turnOverlay" class="hidden">
+            <div id="turnMessage"></div>
+          </div>
+          <div id="loadingScreen" class="loading hidden">
+            <div class="loader"></div>
+            <p class="loading-text">LOADING...</p>
+          </div>
+        </main>
+      </div>
     </div>
-      
+
     <script src="./scripts/battleshipTEST2.js"></script>
-</body>
+  </body>
 </html>
