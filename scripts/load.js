@@ -61,21 +61,21 @@ const sections = {
 `,
 };
 
-const contentDiv = document.getElementById('menuContent');
+const contentDiv = document.getElementById("menuContent");
 
-document.querySelectorAll('nav a, a[data-section]').forEach(link => {
-  link.addEventListener('click', event => {
-    if (link.classList.contains('normal-link')) return;
+document.querySelectorAll("nav a, a[data-section]").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    if (link.classList.contains("normal-link")) return;
 
     event.preventDefault();
-    const section = link.getAttribute('data-section');
+    const section = link.getAttribute("data-section");
 
-    window.scroll({ top: 0, behavior: 'smooth' });
-    contentDiv.classList.remove('visible');
+    window.scroll({ top: 0, behavior: "smooth" });
+    contentDiv.classList.remove("visible");
 
     setTimeout(() => {
       contentDiv.innerHTML = sections[section];
-      contentDiv.classList.add('visible');
+      contentDiv.classList.add("visible");
 
       bindDynamicLinks();
       obseverHiddenElements();
@@ -83,71 +83,108 @@ document.querySelectorAll('nav a, a[data-section]').forEach(link => {
   });
 });
 
-function bindDynamicLinks() {
-  const links = contentDiv.querySelectorAll('a[data-section]');
-  links.forEach(link => {
-    link.addEventListener('click', event => {
-      event.preventDefault();
-      const section = link.getAttribute('data-section');
+function fadeOutMusic(audio, speed = 0.02, callback) {
+  const fade = setInterval(() => {
+    if (audio.volume > speed) {
+      audio.volume -= speed;
+    } else {
+      audio.volume = 0;
+      audio.pause();
+      clearInterval(fade);
+      if (typeof callback === "function") callback();
+    }
+  }, 100);
+}
 
-      contentDiv.classList.remove('visible');
+function bindDynamicLinks() {
+  const links = contentDiv.querySelectorAll("a[data-section]");
+  links.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      const section = link.getAttribute("data-section");
+
+      contentDiv.classList.remove("visible");
 
       setTimeout(() => {
         contentDiv.innerHTML = sections[section];
-        contentDiv.classList.add('visible');
+        contentDiv.classList.add("visible");
 
         bindDynamicLinks();
         obseverHiddenElements();
-      
-        bindPageTransitionLinks();
+
+        if (section === "home") {
+          const menu = document.getElementById("menuContent");
+          const loading = document.getElementById("loadingScreen");
+
+          if (menu) menu.classList.remove("exit");
+          if (loading) loading.classList.remove("visible", "hidden");
+
+          bindPageTransitionLinks();
+        }
       }, 300);
-      
     });
   });
 }
 
 const obseverHiddenElements = () => {
-  const hiddenElements = document.querySelectorAll('.hidden-element');
+  const hiddenElements = document.querySelectorAll(".hidden-element");
   if (!hiddenElements.length) return;
 
-  const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
+  const observer = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
 
-  hiddenElements.forEach(element => observer.observe(element));
+  hiddenElements.forEach((element) => observer.observe(element));
 };
 
 window.onload = () => {
-    contentDiv.classList.add('visible');
-    obseverHiddenElements();
-    bindPageTransitionLinks();
+  contentDiv.classList.add("visible");
+  obseverHiddenElements();
+  bindPageTransitionLinks();
 };
 
 function bindPageTransitionLinks() {
-    const transitionLinks = document.querySelectorAll('a[data-transition="true"]');
-    const menu = document.getElementById("menuContent");
-    const loading = document.getElementById("loadingScreen");
+  const transitionLinks = document.querySelectorAll(
+    'a[data-transition="true"]'
+  );
+  const menu = document.getElementById("menuContent");
+  const loading = document.getElementById("loadingScreen");
+  const menuMusic = document.getElementById("menuMusic");
 
-    transitionLinks.forEach(link => {
-        link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const target = link.getAttribute("href");
+  transitionLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = link.getAttribute("href");
 
-        menu.classList.add("exit");
+      menu.classList.add("exit");
 
+      if (menuMusic) {
+        fadeOutMusic(menuMusic, 0.02, () => {
+          setTimeout(() => {
+            loading.classList.add("visible");
+          }, 300);
+
+          setTimeout(() => {
+            window.location.href = target;
+          }, 1000);
+        });
+      } else {
         setTimeout(() => {
-            loading.classList.remove("hidden");
+          loading.classList.add("visible");
         }, 300);
 
         setTimeout(() => {
-            window.location.href = target;
-        }, 900);
-        });
+          window.location.href = target;
+        }, 1000);
+      }
     });
+  });
 }
-  

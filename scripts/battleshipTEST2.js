@@ -1,31 +1,86 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Muzsika
-  const musicPlayer = new Audio();
-  musicPlayer.volume = 0.5;
-  musicPlayer.loop = true;
+// Muzsika
+// let currentMusic = null;
 
-  function playMusic(src) {
-    musicPlayer.pause();
-    musicPlayer.src = src;
-    musicPlayer.load();
-    musicPlayer.play();
+// function playMusic(src) {
+//   if (currentMusic) {
+//     fadeOutMusic(currentMusic);
+//   }
+
+//   const audio = new Audio(src);
+//   audio.loop = true;
+//   audio.volume = 0.5;
+//   audio.play();
+//   currentMusic = audio;
+// }
+let currentMusic = null;
+let loopStart = null;
+let loopEnd = null;
+let loopListener = null;
+
+function playMusic(src, options = {}) {
+  // Fade out any currently playing track
+  if (currentMusic) {
+    fadeOutMusic(currentMusic);
   }
 
-  function fadeOutAudio(audio, duration = 1000) {
-    const step = 0.05;
-    const interval = duration / (audio.volume / step);
-    console.log("Music is fading");
+  const audio = new Audio(src);
+  audio.volume = options.volume ?? 0.5;
+  audio.loop = false; // we'll handle custom looping
+  audio.currentTime = options.loopStart ?? 0;
 
-    const fade = setInterval(() => {
-      if (audio.volume > step) {
-        audio.volume -= step;
-      } else {
-        audio.pause();
-        clearInterval(fade);
+  loopStart = options.loopStart;
+  loopEnd = options.loopEnd;
+  currentMusic = audio;
+
+  if (loopStart !== undefined && loopEnd !== undefined) {
+    // Loop a specific segment
+    loopListener = () => {
+      if (audio.currentTime >= loopEnd) {
+        audio.currentTime = loopStart;
+        audio.play();
       }
-    }, interval);
+    };
+    audio.addEventListener("timeupdate", loopListener);
   }
 
+  audio.play();
+}
+
+// function fadeOutMusic(audio, speed = 0.02, callback) {
+//   const fadeInterval = setInterval(() => {
+//     if (audio.volume > speed) {
+//       audio.volume -= speed;
+//     } else {
+//       audio.volume = 0;
+//       audio.pause();
+//       clearInterval(fadeInterval);
+//       if (typeof callback === 'function') callback();
+//     }
+//   }, 100);
+// }
+function fadeOutMusic(audio, speed = 0.02, callback) {
+  const fadeInterval = setInterval(() => {
+    if (audio.volume > speed) {
+      audio.volume -= speed;
+    } else {
+      audio.volume = 0;
+      audio.pause();
+      clearInterval(fadeInterval);
+
+      // 🧼 Remove loop event listener
+      if (loopListener && typeof loopListener === "function") {
+        audio.removeEventListener("timeupdate", loopListener);
+        loopListener = null;
+        loopStart = null;
+        loopEnd = null;
+      }
+
+      if (typeof callback === "function") callback();
+    }
+  }, 100);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
   // Hajó típusok
   const shipLimits = {
     5: 1, // Carrier
@@ -210,14 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const music = new Audio("./audio/victory.mp3");
   music.volume = 0.5;
   music.loop = true;
-
-  const startMusic = () => {
-    music.play().catch((err) => console.warn("Autoplay blocked:", err));
-    document.removeEventListener("click", startMusic);
-  };
-
-  document.addEventListener("click", startMusic);
-  document.addEventListener("dragstart", startMusic);
 
   // Táblák generálása
   function createGrid(gridId, player) {
@@ -696,6 +743,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function resetGame() {
     console.log("resetGame() is runnig");
     removeAllEventListeners();
+    if (typeof currentMusic !== "undefined" && currentMusic) {
+      fadeOutMusic(currentMusic, 0.02);
+    }
     document.getElementById("grid1").innerHTML = "";
     document.getElementById("grid2").innerHTML = "";
     document.getElementById("player1-shipyard").innerHTML =
@@ -1029,6 +1079,11 @@ function showStartOverlay(callback) {
 }
 
 function showStartOverlay(callback) {
+  playMusic("./audio/battle.mp3", {
+    loopStart: 3,
+    loopEnd: 41.28,
+    volume: 0.5,
+  });
   const overlay = document.getElementById("startOverlay");
   const messageElement = document.getElementById("startMessage");
   const messageText = "🚢 Let the battle begin! 🚢";
@@ -1057,10 +1112,28 @@ function showStartOverlay(callback) {
   typeLetter();
 }
 
+const turnMessages = [
+  "🎯 Locking target...",
+  "🧭 Scanning for enemy vessels...",
+  "🔄 Switching command...",
+  "💣 Ready to fire!",
+  "📡 Establishing coordinates...",
+  "🛰️ Tactical systems online...",
+  "🛳️ Awaiting firing order...",
+  "⚓ Enemy in sight!",
+  "🎛️ Systems recalibrating...",
+  "🧨 Engaging battle protocol...",
+];
+
 function showTurnOverlay(player, callback) {
   const overlay = document.getElementById("turnOverlay");
   const message = document.getElementById("turnMessage");
-  const text = `🎯 Player ${player}'s Turn`;
+  const randomMessage = Math.floor(Math.random() * turnMessages.length);
+  const isMessage = Math.floor(Math.random() * (10 - 1) + 0) > 5 ? true : false;
+  console.log(isMessage);
+  const text = `🎯 Player ${player}'s Turn ${
+    isMessage ? turnMessages[randomMessage] : ""
+  }`;
 
   message.textContent = "";
   overlay.classList.add("visible");
@@ -1089,6 +1162,10 @@ function showTurnOverlay(player, callback) {
 function showVictoryOverlay(player) {
   const overlay = document.getElementById("victoryOverlay");
   const message = document.getElementById("victoryMessage");
+
+  fadeOutMusic(currentMusic, 0.5, () => {
+    playMusic("./audio/victory.mp3");
+  });
 
   message.textContent = `🎉 Player ${player} Wins! 🎉`;
   overlay.classList.add("visible");
