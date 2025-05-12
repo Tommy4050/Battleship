@@ -1,31 +1,17 @@
 // Muzsika
-// let currentMusic = null;
-
-// function playMusic(src) {
-//   if (currentMusic) {
-//     fadeOutMusic(currentMusic);
-//   }
-
-//   const audio = new Audio(src);
-//   audio.loop = true;
-//   audio.volume = 0.5;
-//   audio.play();
-//   currentMusic = audio;
-// }
 let currentMusic = null;
 let loopStart = null;
 let loopEnd = null;
 let loopListener = null;
 
 function playMusic(src, options = {}) {
-  // Fade out any currently playing track
   if (currentMusic) {
     fadeOutMusic(currentMusic);
   }
 
   const audio = new Audio(src);
   audio.volume = options.volume ?? 0.5;
-  audio.loop = false; // we'll handle custom looping
+  audio.loop = false;
   audio.currentTime = options.loopStart ?? 0;
 
   loopStart = options.loopStart;
@@ -33,7 +19,6 @@ function playMusic(src, options = {}) {
   currentMusic = audio;
 
   if (loopStart !== undefined && loopEnd !== undefined) {
-    // Loop a specific segment
     loopListener = () => {
       if (audio.currentTime >= loopEnd) {
         audio.currentTime = loopStart;
@@ -45,19 +30,6 @@ function playMusic(src, options = {}) {
 
   audio.play();
 }
-
-// function fadeOutMusic(audio, speed = 0.02, callback) {
-//   const fadeInterval = setInterval(() => {
-//     if (audio.volume > speed) {
-//       audio.volume -= speed;
-//     } else {
-//       audio.volume = 0;
-//       audio.pause();
-//       clearInterval(fadeInterval);
-//       if (typeof callback === 'function') callback();
-//     }
-//   }, 100);
-// }
 function fadeOutMusic(audio, speed = 0.02, callback) {
   const fadeInterval = setInterval(() => {
     if (audio.volume > speed) {
@@ -67,7 +39,6 @@ function fadeOutMusic(audio, speed = 0.02, callback) {
       audio.pause();
       clearInterval(fadeInterval);
 
-      // 🧼 Remove loop event listener
       if (loopListener && typeof loopListener === "function") {
         audio.removeEventListener("timeupdate", loopListener);
         loopListener = null;
@@ -613,6 +584,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 const name = shipImage.dataset.name;
                 shipImage.src = `./images/ships/${name}_destroyed.svg`;
               }
+              logShot(
+                currentPlayer,
+                i,
+                `sunk a ${shipImage?.dataset.name || "ship"}`
+              );
             }
             break;
           }
@@ -739,7 +715,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Még mindig mindig, de majdnem kész :(
   function resetGame() {
     console.log("resetGame() is runnig");
     removeAllEventListeners();
@@ -765,8 +740,7 @@ document.addEventListener("DOMContentLoaded", () => {
       2: { 5: 0, 4: 0, 3: 0, 2: 0 },
     };
 
-    // Találat logolás resetelése (Ha kész a shotLog függvény töröld a kommentet!)
-    //document.getElementById("shotLog").innerHTML = "";
+    document.getElementById("shot-log").innerHTML = "";
 
     document.getElementById("turn").textContent = "Player 1: Place Your Ships";
     document.getElementById("message").textContent = "";
@@ -1028,9 +1002,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Találatok logolása
   function logShot(player, cellIndex, result) {
-    /*
-            Player 1 shot at B4 – HIT (A cella megjelenításe)
-        */
+    const node = document.createElement("li");
+    const textnode = document.createTextNode(
+      "Player " +
+        player +
+        " shot at " +
+        indexToCordinates(cellIndex) +
+        " - " +
+        result
+    );
+    node.appendChild(textnode);
+
+    const l = document.getElementById("shot-log");
+    l.insertBefore(node, l.children[0]);
+    if (l.children[1].innerText == "") l.removeChild(l.children[1]);
+
+    console.log(indexToCordinates(cellIndex));
   }
 
   // Az index értékek "kordinátákká való alakítása"
@@ -1042,6 +1029,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 Az oszlopnál oszd el az indexet a tábla méretével maradékosan
                 A betűnél használd a String.fromCharCode()-ot ez egy Unicode kód alapján add vissza egy karaktert. A = 65 + 0, B = 65 + 1, ... (a + 1-nél a sor számát írd)
         */
+    const cordn = Math.ceil(index / gridSize);
+
+    const cordL = index % gridSize;
+    if (String.fromCharCode(65 + cordL) != "A")
+      return String.fromCharCode(65 + cordL) + cordn;
+    return String.fromCharCode(65 + cordL) + (cordn + 1);
   }
 
   populateShipyard(1);

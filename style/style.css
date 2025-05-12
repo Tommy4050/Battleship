@@ -88,7 +88,7 @@ select,
 label {
   display: none;
 }
-/*index.html*/
+
 body.home-page #arcade {
   width: 100vw;
   height: 100vh;
@@ -234,9 +234,6 @@ a:hover {
   cursor: var(--cursor-pointer);
 }
 
-/*Battleship*/
-
-/* Általános */
 .content {
   opacity: 0;
   transform: translateY(20px);
@@ -247,9 +244,7 @@ a:hover {
   opacity: 1;
   transform: translateY(0);
 }
-/*---------*/
 
-/* Torpedó */
 .player-board {
   flex: 1 1 45%;
   max-width: 600px;
@@ -400,16 +395,8 @@ a:hover {
   margin-bottom: 0.5rem;
   padding-left: 1rem;
   position: relative;
-  color: #00ffffcc;
+  text-shadow: 0 0 4px #00ffff;
   word-break: break-word;
-}
-
-/* Custom bullet icon */
-#shot-log li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: #00ffff99;
 }
 
 .ship-image {
@@ -421,7 +408,6 @@ a:hover {
   pointer-events: none;
 }
 
-/*-----A hajót tratalmazó cellák és a képek elrejtése és felefedése ( még nincs kész :( ) ----*/
 .ship-hidden {
   background-color: lightblue;
 }
@@ -433,12 +419,11 @@ a:hover {
 .ship-image-visble {
   opacity: 1;
 }
-/*---------*/
 
 .grid-wrapper {
   position: relative;
 }
-/*---------*/
+
 .shipyard {
   background-color: rgba(16, 24, 40, 0.8);
   padding: 1rem;
