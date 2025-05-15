@@ -210,9 +210,6 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
-  let targetIndex = 0;
-  let targetPlayer = null;
-
   // A hajók elforgatása (kiírás)
   let forcePreviewUpdate = false;
   let isDragging = false;
@@ -384,8 +381,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     grid.appendChild(wrapper);
   }
-
-  let draggingPlayer = null;
 
   function setupDraggableShips() {
     document.querySelectorAll(".draggable-ship").forEach((ship) => {
