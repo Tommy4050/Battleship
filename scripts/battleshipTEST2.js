@@ -1151,7 +1151,7 @@ function showVictoryOverlay(player) {
   const overlay = document.getElementById("victoryOverlay");
   const message = document.getElementById("victoryMessage");
 
-  fadeOutMusic(currentMusic, 0.5, () => {
+  fadeOutMusic(currentMusic, 0.1, () => {
     playMusic("./audio/victory.mp3");
   });
 
