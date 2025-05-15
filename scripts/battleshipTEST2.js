@@ -1163,3 +1163,23 @@ function showVictoryOverlay(player) {
   message.textContent = `🎉 Player ${player} Wins! 🎉`;
   overlay.classList.add("visible");
 }
+
+/// smoke /fire
+
+let smoke  = document.getElementById("smoke");
+
+function createSmoke(e) {
+  let elem = document.createElement("span");
+  elem.classList.add(elem);
+
+  elem.style.left = `${e.clientX}px`;
+  elem.style.top = `${e.clientY}px`;
+
+  smoke.appendChild(elem);
+  elem.addEventListener("animationend", () => {
+    elem.remove();
+  });
+}
+
+//document.addEventListener("click", createSmoke);
+document.addEventListener("mousemove", createSmoke);
