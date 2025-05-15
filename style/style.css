@@ -39,6 +39,47 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
   cursor: var(--cursor-main);
+  scrollbar-color: #00ffff88 rgba(0, 0, 0, 0.2);
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00ffff88;
+  border-radius: 10px;
+  border: 2px solid #0f1a2e;
+  box-shadow: inset 0 0 5px #00ffff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00ffffcc;
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: inset 0 0 5px #00ffff;
+  }
+  50% {
+    box-shadow: inset 0 0 12px #00ffff;
+  }
+}
+
+::-webkit-scrollbar-thumb {
+  animation: glowPulse 2s infinite ease-in-out;
+}
+
+*::selection {
+  background-color: transparent;
 }
 
 button:hover {
@@ -50,7 +91,6 @@ body {
   font-family: Arial, sans-serif;
   cursor: var(--cursor-main) 12 12, auto;
   background-color: var(--secondary-bg);
-  padding: 0 15rem 0 15rem;
   overflow-x: hidden;
 }
 
