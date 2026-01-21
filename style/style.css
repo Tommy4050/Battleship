@@ -99,14 +99,20 @@ body.battleship-page {
 }
 
 body.battleship-page .arcade-screen {
-  width: 1600px;
-  max-width: none;
+  width: 100%;
+  max-width: 1600px;
   height: 100vh;
   margin: 0 auto;
   padding: 2rem;
   box-sizing: border-box;
   background-color: var(--primary-bg);
+
+  justify-content: flex-start;
+  align-items: stretch;
+  
+  overflow-y: auto;
 }
+
 
 body.battleship-page .container {
   gap: 2rem;
@@ -498,6 +504,11 @@ a:hover {
   gap: 18px;
 }
 
+body.battleship-page .shipyard {
+  margin-top: clamp(24px, 6vh, 170px);
+}
+
+
 .target-cell {
   outline: 3px solid yellow;
   box-sizing: border-box;
@@ -827,6 +838,17 @@ a:hover {
   outline: none;
   box-shadow: 0 0 15px 4px #00ffffaa;
 }
+
+
+body.battleship-page .arcade-screen {
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+body.battleship-page .arcade-screen main {
+  width: 100%;
+}
+
 
 #arcadeFadeWrapper {
   opacity: 0;
